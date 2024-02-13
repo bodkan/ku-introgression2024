@@ -8,13 +8,13 @@
 
 *Fortunately, you also have genotypes from three other individuals: an African, a Neanderthal, and a Chimpanzee. This means you are able to compute a D statistic which will test for evidence of Neanderthal introgression in a given individual.*
 
-*Can you save the day and determine which of the A, B, C, ..., H genomes are African and which are Eurasian based on the following D statistic test?*
+*Can you save the day and determine which of the A, B, C, ..., H samples are African and which are Eurasian based on the following D statistic test?*
 
 $$
 D(\textrm{African}, X; \textrm{Neanderthal}, \textrm{Chimp}).
 $$
 
-*(Recall that only Eurasian genomes are expected to have appreciable amounts of Neanderthal ancestry but Africans don't.)*
+*(Recall that only Eurasians are expected to have appreciable amounts of Neanderthal ancestry but Africans don't.)*
 
 ### Moving over to R
 
