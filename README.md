@@ -129,3 +129,39 @@ axis(side = 1, at = seq_along(X), labels = X)
 ---
 
 If you want to take a closer look at how the genotype data was prepared (it was simulated!), you can see the complete code [here](generate_genotypes.R).
+
+## Exercise 2 -- dating Neanderthal admixture
+
+### Introduction
+
+You managed to sequence a bunch more Eurasian genomes (100 of diploid individuals) and are interested in double-checking the time of Neanderthal introgression into the ancestors of all Eurasians that's in the literature. To be able to do this, you ran an inference software which gives you the exact coordinates of Neanderthal DNA tracts present in every Eurasian genome that you sequenced. This of course means that you also know the lengths of each of those tracts.
+
+You the distribution of the Neanderthal tract lengths in your population to estimate the time of Neanderthal introgression!
+
+### Moving over to R
+
+First load the table with coordinates of all Neanderthal tracts into R:
+
+```         
+tracts <- readRDS(url("https://github.com/bodkan/ku-introgression2024/raw/main/tracts.rds"))
+```
+
+The `gt` data set is a plain R data frame where each individual's column contains the genotype of that individual's chromosome (`0` - ancestral allele, `1` - derived allele).
+
+Familiarize yourself with the data by running this R command which shows information from only the first few genotypes:
+
+```         
+head(gt)
+```
+
+For how many individuals do we have information about Neanderthal DNA tracts that they carry?
+
+```
+length(unique(tracts$individual))
+```
+
+It looks like the inference software (or a helpful bioinformatician) binned each tract according to its length. What does the distribution of Neanderthal tract lengths looks like in your data? Knowing that recombination has acted on the introgressed Neanderthal DNA over time, each generation, suggests that the distribution should look exponential -- do you see this in the data?
+
+```
+hist(tracts$bin, breaks = 50)
+```
