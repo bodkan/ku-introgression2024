@@ -27,4 +27,7 @@ tracts <- ts_tracts(ts, census = 55000, quiet = TRUE) %>%
   dplyr::select(-node_id, -pop, -source_pop, -source_pop_id) %>%
   dplyr::rename(individual = name)
 
+n <- 50
+tracts$bin <- cut(tracts$length, breaks = n, labels = FALSE)
+
 saveRDS(tracts, "tracts.rds")
