@@ -2,17 +2,21 @@
 
 ## Exercise 1 -- D statistics / introgression test
 
-You sequenced genomes of two some Africans and Eurasians (four genomes from each population). Unfortunately, there's been a mix up in the lab and you don't know which one is which! You only know that they are labeled A, B, C, ..., H. What a disaster!
+### Introduction
 
-Fortunately, you also have three other genomes which you know are from an African individual, a Neanderthal, and a Chimpanzee outgroup. This means you are able to compute a D statistic which will test for evidence of Neanderthal introgression in a given sample.
+*You sequenced genomes of two some Africans and Eurasians (four genomes from each population). Unfortunately, there's been a mix up in the lab and you don't know which one is which! You only know that they are labeled A, B, C, ..., H. What a disaster!*
 
-Can you save the day and determine which of the A, B, C, ..., H genomes are African and which are Eurasian based on the following D statistic test?
+*Fortunately, you also have three other genomes which you know are from an African individual, a Neanderthal, and a Chimpanzee outgroup. This means you are able to compute a D statistic which will test for evidence of Neanderthal introgression in a given sample.*
+
+*Can you save the day and determine which of the A, B, C, ..., H genomes are African and which are Eurasian based on the following D statistic test?*
 
 $$
 D(\textrm{African}, X; \textrm{Neanderthal}, \textrm{Chimp}).
 $$
 
-(Recall that only Eurasian genomes are expected to have appreciable amounts of Neanderthal ancestry but Africans don't.)
+*(Recall that only Eurasian genomes are expected to have appreciable amounts of Neanderthal ancestry but Africans don't.)*
+
+### Moving over to R
 
 First load the genotype table into R:
 
@@ -53,9 +57,9 @@ gt[["African"]] == gt[["Neanderthal"]] # this gives us TRUE/FALSE values
 sum(gt[["African"]] == gt[["Neanderthal"]])
 ```
 
-On the other hand, this would count how many alleles are _different_ between our African and Chimpanzee chromosome:
+On the other hand, this would count how many alleles are *different* between our African and Chimpanzee chromosome:
 
-```
+```         
 sum(gt[["African"]] != gt[["Neanderthal"]]) # note the != instead of ==
 ```
 
@@ -63,7 +67,7 @@ Inside the `sum()` function we can compose multiple logical conditions to create
 
 Armed with this knowledge, we can compute the BABA and ABBA counts using this bit of R code:
 
-```
+```         
 X = "A"  # or "B", or "C", ..., or "H"
 
 abba <- sum(
@@ -87,9 +91,9 @@ baba - abba
 
 **What does it mean for a test statistic to "be about zero"? What are we missing to truly use this as a statistical significance test?**
 
-_Solution:_
+*Solution:*
 
-```
+```         
 X <- c("A", "B", "C", "D", "E", "F", "G", "H")
 
 D_values <- sapply(X, function(x) {
@@ -119,4 +123,3 @@ axis(side = 1, at = seq_along(X), labels = X)
 # intervals using a so-called bootstrap procedure across windows along a genome
 # (https://en.wikipedia.org/wiki/Bootstrapping_(statistics)).
 ```
-
