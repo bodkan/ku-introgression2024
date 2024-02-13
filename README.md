@@ -4,13 +4,15 @@
 
 You sequenced genomes of two some Africans and Eurasians (four genomes from each population). Unfortunately, there's been a mix up in the lab and you don't know which one is which! You only know that they are labeled A, B, C, ..., H. What a disaster!
 
-Fortunately, you also have three other genomes which you know are from an African individual, a Neanderthal, and a Chimpanzee outgroup, which means you are able to compute a D statistic test for the presence of Neanderthal introgression. Can you save the day and determine which of the A, B, C, ..., H genomes are African and which are Eurasian based on the following D statistic test?
+Fortunately, you also have three other genomes which you know are from an African individual, a Neanderthal, and a Chimpanzee outgroup. This means you are able to compute a D statistic which will test for evidence of Neanderthal introgression in a given sample.
+
+Can you save the day and determine which of the A, B, C, ..., H genomes are African and which are Eurasian based on the following D statistic test?
 
 $$
 D(\textrm{African}, X; \textrm{Neanderthal}, \textrm{Chimp}).
 $$
 
-Recall that only Eurasian genomes are expected to have appreciable amounts of Neanderthal ancestry but Africans don't.
+(Recall that only Eurasian genomes are expected to have appreciable amounts of Neanderthal ancestry but Africans don't.)
 
 First load the genotype table into R:
 
