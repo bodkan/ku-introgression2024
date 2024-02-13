@@ -73,15 +73,15 @@ Armed with this knowledge, we can compute the BABA and ABBA counts using this bi
 X = "A"  # or "B", or "C", ..., or "H"
 
 abba <- sum(
-  (gt[["African"]] == gt[["Chimp"]]) &         # filters for   A**A in the "D quartet"
-  (gt[["African"]] != gt[["Neanderthal"]]) &   # filters for   A*B* in the "D quartet"
-  (gt[[X]]         == gt[["Neanderthal"]])     # filters for   *BB* in the "D quartet"
+  (gt[["African"]] == gt[["Chimp"]]) &         # filters for A**A sites
+  (gt[["African"]] != gt[["Neanderthal"]]) &   # filters for A*B* sites
+  (gt[[X]]         == gt[["Neanderthal"]])     # filters for *BB* sites
 )                                              # together then ABBA
 
 baba <- sum(
-  (gt[["African"]] != gt[["Chimp"]]) &         # filters for   B**A in the "D quartet"
-  (gt[["African"]] == gt[["Neanderthal"]]) &   # filters for   B*B* in the "D quartet"
-  (gt[[X]]         == gt[["Chimp"]])           # filters for   *A*A in the "D quartet"
+  (gt[["African"]] != gt[["Chimp"]]) &         # filters for B**A sites
+  (gt[["African"]] == gt[["Neanderthal"]]) &   # filters for B*B* sites
+  (gt[[X]]         == gt[["Chimp"]])           # filters for *A*A sites
 )                                              # together then BABA
 
 baba - abba
