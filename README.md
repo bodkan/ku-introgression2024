@@ -81,7 +81,7 @@ baba - abba
 
 **You know that if `X` is a African, you expect to see roughly the same count of `BABA` and `ABBA` site patterns, so the difference should "be about zero". Compute this for all of your mixed up chromosomes A, B, C, ..., H and note down the `baba - abba` values you got for each -- which ones are most likely African and which ones are Eurasian?**
 
-**If you are more familiar with R, compute the counts automatically in a loop of some kind and make a figure.**
+**[If you are more familiar with R, compute the counts automatically in a loop of some kind and make a figure.]**
 
 **What does it mean for a test statistic to "be about zero"? What are we missing to truly use this as a statistical significance test?**
 
