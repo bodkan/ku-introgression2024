@@ -54,6 +54,8 @@ Then we can use this to sum up how many positions of those two chromosomes carry
 gt[["African"]] == gt[["Neanderthal"]] # this gives us TRUE/FALSE values 
 
 # sum() treats TRUE as 1 and FALSE as 0, so we can sum everything up!
+# -- this gives us the number of positions at which an African carries the same
+#    allele as the Neanderthal
 sum(gt[["African"]] == gt[["Neanderthal"]])
 ```
 
