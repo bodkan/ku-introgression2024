@@ -2,7 +2,7 @@
 # setup_env()
 
 library(slendr)
-init_env()
+init_env(quiet = TRUE)
 
 anc <- population("ancestors", N = 10000, time = 6500000, remove = 649000)
 chimp <- population("Chimpanzees", N = 20000, time = 6000000, parent = anc)
@@ -22,8 +22,8 @@ samples <- schedule_sampling(
   list(eur, 4), list(afr, 5), list(nea, 1), list(chimp, 1)
 )
 
-plot_model(true_model, proportions = TRUE,
-           order = c("Africans", "Europeans", "ancestors", "Neanderthals", "Chimpanzees"))
+# plot_model(true_model, proportions = TRUE,
+#            order = c("Africans", "Europeans", "ancestors", "Neanderthals", "Chimpanzees"))
 
 ts <- msprime(true_model, sequence_length = 100e6, recombination_rate = 1e-8, samples = samples, random_seed = 42) %>%
   ts_mutate(mutation_rate = 1e-8, random_seed = 42)
@@ -45,7 +45,7 @@ gt <- dplyr::rename(
 
 # subsample genotypes to a more manageable size
 set.seed(12345)
-gt <- dplyr::sample_n(oldgt, 300000) %>% dplyr::arrange(pos)
+gt <- dplyr::sample_n(gt, 300000) %>% dplyr::arrange(pos)
 
 invariant <- dplyr::select(gt, -pos) %>% rowMeans() %>% {. == 0 | . == 1}
 fixed <- dplyr::select(gt, -pos, -Chimp) %>%
@@ -55,6 +55,6 @@ fixed <- dplyr::select(gt, -pos, -Chimp) %>%
 gt <- gt[!invariant & !fixed, ]
 
 set.seed(19)
-gt <- dplyr::sample_n(gt, 100000)
+gt <- dplyr::sample_n(gt, 100000) %>% dplyr::arrange(pos)
 
 saveRDS(gt, "genotypes.rds")
