@@ -111,7 +111,10 @@ abline(h = 0, lty = 2, col = "red")
 axis(side = 1, at = seq_along(X), labels = X)
 
 # In this simple example we're missing confidence intervals -- those would allow
-# us to do a statistical test to determine for which samples we really cannot
-# reject a null hypothesis of no gene flow from Neanderthals.
+# us to do a proper statistical test to determine for which samples we really cannot
+# reject a null hypothesis of no gene flow from Neanderthals. Real-world software
+# such as ADMIXTOOLS (https://github.com/DReichLab/AdmixTools) computes confidence
+# intervals using a so-called bootstrap procedure across windows along a genome
+# (https://en.wikipedia.org/wiki/Bootstrapping_(statistics)).
 ```
 
