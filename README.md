@@ -102,13 +102,13 @@ D_values <- sapply(X, function(x) {
   abba <- sum(
     (gt[["African"]] == gt[["Chimp"]]) &         # filters for A**A sites
     (gt[["African"]] != gt[["Neanderthal"]]) &   # filters for A*B* sites
-    (gt[[X]]         == gt[["Neanderthal"]])     # filters for *BB* sites
+    (gt[[x]]         == gt[["Neanderthal"]])     # filters for *BB* sites
   )                                              # together then ABBA
   
   baba <- sum(
     (gt[["African"]] != gt[["Chimp"]]) &         # filters for B**A sites
     (gt[["African"]] == gt[["Neanderthal"]]) &   # filters for B*B* sites
-    (gt[[X]]         == gt[["Chimp"]])           # filters for *A*A sites
+    (gt[[x]]         == gt[["Chimp"]])           # filters for *A*A sites
   )                                              # together then BABA
   
   (baba - abba) / (baba + abba)
