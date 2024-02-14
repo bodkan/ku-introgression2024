@@ -93,7 +93,9 @@ baba - abba
 
 **What does it mean for a test statistic to "be about zero"? What are we missing to truly use this as a statistical significance test?**
 
-*Solution:*
+---
+
+If you're not comfortable with R, feel free to run this in full and answer the questions based on what you see:
 
 ```         
 X <- c("A", "B", "C", "D", "E", "F", "G", "H")
@@ -119,15 +121,15 @@ abline(h = 0, lty = 2, col = "red")
 axis(side = 1, at = seq_along(X), labels = X)
 ```
 
-We can see that the samples A-D are consistent with a D statistic value of about 0, meaning that the BABA and ABBA counts were about the same. This is what we would expect for African samples who are not expected to be closer to a Neanderthal genome than another African.
+We can see that the samples A-D are consistent with a D statistic value of about 0, meaning that the BABA and ABBA counts were "about the same". This is what we would expect for African samples who are not expected to be closer to a Neanderthal genome than another African.
 
-On the other hand, samples E-H show a much more negative value of the D statistic, which is consistent with an access of ABBA site patterns -- which arise with an increased sharing of derived alleles between the sample X and a Neanderthal genome.
+On the other hand, samples E-H show a much more negative value of the D statistic, which is consistent with an access of ABBA sites compared to BABA sites-- which arise with an increased sharing of derived alleles between the sample X and a Neanderthal genome as we would expect to be the case when X is of Eurasian ancestry.
 
 **Important:** In this simple example we're missing confidence intervals -- those would allow
 us to do a proper statistical test to determine for which samples we really cannot
-reject a null hypothesis of no gene flow from Neanderthals. This way we can
-avoid the vague and statistically unsatisfying talk about a value being "almost zero",
-and some other value being "much more negative".
+reject a null hypothesis of no gene flow from Neanderthals. This would allow us to
+avoid the vague and statistically unsatisfying talk about some value being "almost zero",
+and some other value being "much more negative" than that. The confidence interval for a given D statistic would either intersect the 0 null hypothesis or not.
 
 Real-world software such as [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools) computes confidence
 intervals using a so-called [bootstrap](https://en.wikipedia.org/wiki/Bootstrapping_(statistics)) procedure across windows along a genome.
@@ -140,9 +142,11 @@ If you want to take a closer look at how the genotype data was prepared (it was 
 
 ### Introduction
 
-You managed to sequence a bunch more Eurasian genomes (100 of diploid individuals) and are interested in double-checking the time of Neanderthal introgression into the ancestors of all Eurasians that's in the literature. To be able to do this, you ran an inference software which gives you the exact coordinates of Neanderthal DNA tracts present in every Eurasian genome that you sequenced. This of course means that you also know the lengths of each of those tracts.
+_You sequenced 100 diploid genomes from a Eurasian population and are interested in estimating the time of Neanderthal introgression into the ancestors of this population. The literature suggests that the introgression happened around 55 thousand years ago -- does this also apply to the population that you sequenced?
 
-You the distribution of the Neanderthal tract lengths in your population to estimate the time of Neanderthal introgression!
+To be able to do this, you ran an inference software which gives you the exact coordinates of Neanderthal DNA tracts present in every Eurasian genome that you sequenced. This of course means that you also know the lengths of each of those tracts.
+
+Use the distribution of the Neanderthal tract lengths in your population to estimate the time of Neanderthal introgression!_
 
 ### Moving over to R
 
@@ -184,10 +188,10 @@ The distribution does, indeed, look quite exponential. Let's try to use this to 
 As we know, over time since admixture, recombination breaks up longer haplotypes into shorter one, regularly almost like a clock. And it turns out that the distribution of tract lengths after time $t$ follows exponential decay, leading to the distribution of tract lengths $x$ to have the following form:
 
 $$
-f(\textrm{x}) \sim \exp(-\lambda x) = \exp(-r t x)
+f(\textrm{x}) \sim \exp(-\lambda x) = \exp(-r t x),
 $$
 
-Where the $\lambda$ parameter determines the _rate_ of exponential decay and, under some simplifying assumption can be computed as the product of the recombination rate (traditionally in humans with value of about $1e-8$) and $t$ which is the time since admixture -- **the latter is our unknown we're trying to compute here**.
+where the $\lambda$ parameter determines the _rate_ of exponential decay and, under some simplifying assumption can be computed as the product of the recombination rate (traditionally in humans with value of about $1e-8$) and $t$ which is the time since admixture -- **the latter is our unknown we're trying to compute here**.
 
 It also turns out that the [expected value](https://en.wikipedia.org/wiki/Exponential_distribution#Mean,_variance,_moments,_and_median) of this exponential distribution (which can be computed simply as $1 / \lambda$) gives us the expected tract length after time $t$. Starting from our data, we can compute this expected length simply by computing the average introgressed tract length in our data like this:
 
