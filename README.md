@@ -205,13 +205,13 @@ L <- mean(tracts$length)
 L # length in units of base pairs
 ```
 
-Taking all the math together and doing a little algebra, we can write this:
+Taking all the math together and doing a little algebra, we can express the expected length of an introgressed fragment like this:
 
 $$
 \textrm{average tract length}~L = \frac{1}{\lambda} = \frac{1}{rt}
 $$
 
-But because we know $L$ (average tract length) and $r$ (recombination rate), this means we can get an estimate of the time since the admixture like this by simply rearranging the equation to get $t$:
+But because we know $L$ (average tract length) and $r$ (recombination rate), this means we can get an estimate of the time since the admixture by a simple rearrangement of the above equation to get $t$:
 
 $$
 t = \frac{1}{rL}
