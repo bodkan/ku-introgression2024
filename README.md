@@ -117,15 +117,21 @@ D_values <- sapply(X, function(x) {
 plot(D_values, xaxt = "n", xlab = "test sample", ylab = " D(African, X; Neanderthal, Chimp)")
 abline(h = 0, lty = 2, col = "red")
 axis(side = 1, at = seq_along(X), labels = X)
-
-# In this simple example we're missing confidence intervals -- those would allow
-# us to do a proper statistical test to determine for which samples we really cannot
-# reject a null hypothesis of no gene flow from Neanderthals. Real-world software
-# such as ADMIXTOOLS (https://github.com/DReichLab/AdmixTools) computes confidence
-# intervals using a so-called bootstrap procedure across windows along a genome
-# (https://en.wikipedia.org/wiki/Bootstrapping_(statistics)).
 ```
 
+We can see that the samples A-D are consistent with a D statistic value of about 0, meaning that the BABA and ABBA counts were about the same. This is what we would expect for African samples who are not expected to be closer to a Neanderthal genome than another African.
+
+On the other hand, samples E-H show a much more negative value of the D statistic, which is consistent with an access of ABBA site patterns -- which arise with an increased sharing of derived alleles between the sample X and a Neanderthal genome.
+
+**Important:** In this simple example we're missing confidence intervals -- those would allow
+us to do a proper statistical test to determine for which samples we really cannot
+reject a null hypothesis of no gene flow from Neanderthals. This way we can
+avoid the vague and statistically unsatisfying talk about a value being "almost zero",
+and some other value being "much more negative".
+
+Real-world software such as ADMIXTOOLS (https://github.com/DReichLab/AdmixTools) computes confidence
+intervals using a so-called bootstrap procedure across windows along a genome
+(https://en.wikipedia.org/wiki/Bootstrapping_(statistics)).
 ------------------------------------------------------------------------
 
 If you want to take a closer look at how the genotype data was prepared (it was simulated!), you can see the complete code [here](generate_genotypes.R).
