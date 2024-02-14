@@ -155,7 +155,7 @@ If you want to take a closer look at how the genotype data was prepared (it was 
 
 ### Moving over to R
 
-First load the table with coordinates of all Neanderthal tracts into R:
+**First load the table with coordinates of all Neanderthal tracts** into R:
 
 ```         
 tracts <- readRDS(url("https://github.com/bodkan/ku-introgression2024/raw/main/tracts.rds"))
@@ -163,19 +163,19 @@ tracts <- readRDS(url("https://github.com/bodkan/ku-introgression2024/raw/main/t
 
 The `gt` data set is a plain R data frame where each individual's column contains the genotype of that individual's chromosome (`0` - ancestral allele, `1` - derived allele).
 
-Familiarize yourself with the data by running this R command which shows information from only the first few genotypes:
+**Familiarize yourself with the data** by running this R command which shows information from only the first few genotypes:
 
 ```         
 head(tracts)
 ```
 
-For how many individuals do we have information about Neanderthal DNA tracts that they carry?
+**For how many individuals do we have information about Neanderthal DNA tracts that they carry?**
 
 ```         
 length(unique(tracts$individual))
 ```
 
-It looks like the inference software (or a helpful bioinformatician) binned each tract according to its length. What does the distribution of Neanderthal tract lengths looks like in your data? Knowing that recombination has acted on the introgressed Neanderthal DNA over time, each generation, suggests that the distribution should look exponential -- do you see this in the data? To answer this, plot the proportion of tracts in each bin.
+It looks like the inference software (or a helpful bioinformatician) binned each tract according to its length. **What does the distribution of Neanderthal tract lengths looks like in your data?** Knowing that recombination has acted on the introgressed Neanderthal DNA over time, each generation, suggests that the distribution should look exponential -- do you see this in the data? To answer this, plot the proportion of tracts in each bin.
 
 ```         
 # get the bin numbers
@@ -188,12 +188,12 @@ props <- counts / sum(counts)
 plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion of tracts")
 ```
 
-The distribution does, indeed, look quite exponential. Let's try to use this to date the Neanderthal introgression using information encoded in the distribution of tract lengths!
+The distribution does, indeed, look quite exponential. **Let's try to use this to date Neanderthal introgression using the information encoded in the distribution of tract lengths!**
 
-As we know, over time since admixture, recombination breaks up longer haplotypes into shorter one, regularly almost like a clock. And it turns out that the distribution of tract lengths after time $t$ follows exponential decay, leading to the distribution of tract lengths $x$ to have the following form:
+As we know, over time since admixture, recombination breaks up longer haplotypes into shorter ones, regularly almost like a clock. And it turns out that the distribution of tract lengths after time $t$ follows exponential decay, leading to the distribution of tract lengths $x$ to have the following form:
 
 $$
-f(\textrm{x}) \sim \exp(-\lambda x) = \exp(-r t x),
+\textrm{tract length of }~x \sim \exp(-\lambda x) = \exp(-r t x),
 $$
 
 where the $\lambda$ parameter determines the *rate* of exponential decay and, under some simplifying assumption can be computed as the product of the recombination rate (traditionally in humans with value of about $1e-8$) and $t$ which is the time since admixture -- **the latter is our unknown we're trying to compute here**.
