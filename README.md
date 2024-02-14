@@ -93,7 +93,7 @@ baba - abba
 
 **What does it mean for a test statistic to "be about zero"? What are we missing to truly use this as a statistical significance test?**
 
----
+------------------------------------------------------------------------
 
 If you're not comfortable with R, feel free to run this in full and answer the questions based on what you see:
 
@@ -125,14 +125,9 @@ We can see that the samples A-D are consistent with a D statistic value of about
 
 On the other hand, samples E-H show a much more negative value of the D statistic, which is consistent with an access of ABBA sites compared to BABA sites-- which arise with an increased sharing of derived alleles between the sample X and a Neanderthal genome as we would expect to be the case when X is of Eurasian ancestry.
 
-**Important:** In this simple example we're missing confidence intervals -- those would allow
-us to do a proper statistical test to determine for which samples we really cannot
-reject a null hypothesis of no gene flow from Neanderthals. This would allow us to
-avoid the vague and statistically unsatisfying talk about some value being "almost zero",
-and some other value being "much more negative" than that. The confidence interval for a given D statistic would either intersect the 0 null hypothesis or not.
+**Important:** In this simple example we're missing confidence intervals -- those would allow us to do a proper statistical test to determine for which samples we really cannot reject a null hypothesis of no gene flow from Neanderthals. This would allow us to avoid the vague and statistically unsatisfying talk about some value being "almost zero", and some other value being "much more negative" than that. The confidence interval for a given D statistic would either intersect the 0 null hypothesis or not.
 
-Real-world software such as [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools) computes confidence
-intervals using a so-called [bootstrap](https://en.wikipedia.org/wiki/Bootstrapping_(statistics)) procedure across windows along a genome.
+Real-world software such as [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools) computes confidence intervals using a so-called [bootstrap](https://en.wikipedia.org/wiki/Bootstrapping_(statistics)) procedure across windows along a genome.
 
 ------------------------------------------------------------------------
 
@@ -142,11 +137,11 @@ If you want to take a closer look at how the genotype data was prepared (it was 
 
 ### Introduction
 
-_You sequenced 100 diploid genomes from a Eurasian population and are interested in estimating the time of Neanderthal introgression into the ancestors of this population. The literature suggests that the introgression happened around 55 thousand years ago -- does this also apply to the population that you sequenced?
+*You sequenced 100 diploid genomes from a Eurasian population and are interested in estimating the time of Neanderthal introgression into the ancestors of this population. The literature suggests that the introgression happened around 55 thousand years ago -- does this also apply to the population that you sequenced?*
 
-To be able to do this, you ran an inference software which gives you the exact coordinates of Neanderthal DNA tracts present in every Eurasian genome that you sequenced. This of course means that you also know the lengths of each of those tracts.
+*To be able to do this, you ran an inference software which gives you the exact coordinates of Neanderthal DNA tracts present in every Eurasian genome that you sequenced. This of course means that you also know the lengths of each of those tracts.*
 
-Use the distribution of the Neanderthal tract lengths in your population to estimate the time of Neanderthal introgression!_
+*Use the distribution of the Neanderthal tract lengths in your population to estimate the time of Neanderthal introgression!*
 
 ### Moving over to R
 
@@ -191,7 +186,7 @@ $$
 f(\textrm{x}) \sim \exp(-\lambda x) = \exp(-r t x),
 $$
 
-where the $\lambda$ parameter determines the _rate_ of exponential decay and, under some simplifying assumption can be computed as the product of the recombination rate (traditionally in humans with value of about $1e-8$) and $t$ which is the time since admixture -- **the latter is our unknown we're trying to compute here**.
+where the $\lambda$ parameter determines the *rate* of exponential decay and, under some simplifying assumption can be computed as the product of the recombination rate (traditionally in humans with value of about $1e-8$) and $t$ which is the time since admixture -- **the latter is our unknown we're trying to compute here**.
 
 It also turns out that the [expected value](https://en.wikipedia.org/wiki/Exponential_distribution#Mean,_variance,_moments,_and_median) of this exponential distribution (which can be computed simply as $1 / \lambda$) gives us the expected tract length after time $t$. Starting from our data, we can compute this expected length simply by computing the average introgressed tract length in our data like this:
 
@@ -227,11 +222,11 @@ t
 t * 30
 ```
 
-You should get a value will be quite close to ~55 thousand years ago, an estimate which is often found in the literature as the time when Neanderthals and anatomically modern humans interbred!
+You should get a value will be quite close to \~55 thousand years ago, an estimate which is often found in the literature as the time when Neanderthals and anatomically modern humans interbred!
 
 As a last sanity check, if we use this time to compute the rate of exponential decay $\lambda$, we should get a nice fit of the theoretical exponential decay curve over the empirical counts of tract lengths in each bin. As a reminder, this is the decay:
 
-```
+```         
 plot(bins, props)
 ```
 
@@ -239,7 +234,7 @@ Let's try if we can plot the theoretical exponential decay from the estimated ti
 
 First, because the exponential plot above shows the decay of the size of introgressed tracts in bins, the $\lambda$ parameter determines the decay with each sucessive bin. However, our recombination rate $r$ which features in the equation to compute $\lambda$ above describes recombination in units of base pairs, not bins. First compute the average increase in tract length as we move from bin to bin:
 
-```
+```         
 # compute the average length in each bin
 average_bins <- aggregate(length ~ bin, data = tracts, FUN = mean)
 
