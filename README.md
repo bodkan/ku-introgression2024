@@ -170,30 +170,20 @@ bins <- sort(unique(tracts$bin))
 counts <- as.integer(table(tracts$bin))
 props <- counts / sum(counts)
 
-plot(bins, props)
+plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion")
 ```
 
-The distribution does, indeed, look quite exponential. We can verify this by plotting the distribution on a log-scale because this plot will -- in case of an exponential distribution -- look completely linear:
+The distribution does, indeed, look quite exponential. Let's try to use this to date the Neanderthal introgression using information encoded in the distribution of tract lengths!
 
-```         
-plot(bins, log(props))
-
-# overlay a linear regresion line of the the log-scale plot
-lm_model <- lm(log(props) ~ bins)
-abline(lm_model)
-```
-
-Having verified the necessary assumptions, let's try to date the Neanderthal introgression using information encoded in the distribution of tract lengths!
-
-As we know, over time since admixture, recombination breaks up longer haplotypes into shorter one, regularly almost like a clock. And it turns out that the distribution of tract lengths after time `t` follows exponential decay, leading to the distribution of tract lengths `x` to have the following form:
+As we know, over time since admixture, recombination breaks up longer haplotypes into shorter one, regularly almost like a clock. And it turns out that the distribution of tract lengths after time $t$ follows exponential decay, leading to the distribution of tract lengths $x$ to have the following form:
 
 $$
 f(\textrm{x}) \sim \exp(-\lambda x) = \exp(-r t x)
 $$
 
-Where the $\lambda$ parameter determines the rate of exponential decay and, under some simplifying assumption can be computed as the product of the recombination rate (traditionally in humans with value of about $1e-8$) and $t$ which is the time since admixture.
+Where the $\lambda$ parameter determines the _rate_ of exponential decay and, under some simplifying assumption can be computed as the product of the recombination rate (traditionally in humans with value of about $1e-8$) and $t$ which is the time since admixture -- **the latter is our unknown we're trying to compute here**.
 
-It also turns out that the slope of the linear regression fit we computed above is exactly expectation of this exponential decay (which can be computed simply as $1 \ \lambda$) gives us the expected tract length after time $t$. We can compute this empirically by taking the average introgressed tract length in our data like this:
+It also turns out that the [expected value](https://en.wikipedia.org/wiki/Exponential_distribution#Mean,_variance,_moments,_and_median) of this exponential distribution (which can be computed simply as $1 / \lambda$) gives us the expected tract length after time $t$. Starting from our data, we can compute this expected length simply by computing the average introgressed tract length in our data like this:
 
 ```         
 L <- mean(tracts$length)
@@ -206,40 +196,56 @@ $$
 \textrm{average tract length} L = \frac{1}{\lambda} = \frac{1}{rt}
 $$
 
-But because we know $L$ (average tract length) and $r$ (recombination rate), this means we can get an estimate of the time since the admixture like this!
+But because we know $L$ (average tract length) and $r$ (recombination rate), this means we can get an estimate of the time since the admixture like this by simply rearranging the equation to get $t$:
 
 $$
 t = \frac{1}{rL}
 $$
 
-This will be in generations, so we'll have to multiply this quantity by the generation time (roughly 30 years for humans) to get time in years before the present.
+Note that this time estimate will be in units of generations, so we'll have to multiply this quantity by the generation time (roughly 30 years for humans) to get time in years before the present.
 
-Get the estimate of the admixture time now:
+We can use this equation to compute the estimate of the admixture time now:
 
 ```         
 r <- 1e-8 # crossovers per bp per generation
 
-t <- 1 / (r * L) * 30
+t <- 1 / (r * L)
 t
+
+# convert the time of introgression to years before present assuming
+# generation time of 30 years
+t * 30
 ```
 
-We got a value which fits very well the value of \~55 thousand years ago which is often find in the literature as the assumed time when Neanderthals and anatomically modern humans interbred!
+You should get a value will be quite close to ~55 thousand years ago, an estimate which is often found in the literature as the time when Neanderthals and anatomically modern humans interbred!
 
-As a last sanity check, overlay the theoretical exponential decay curve over the empirical counts of tract lengths in each bin by computing the $\lambda$ decay rate:
-
-Compute the step of tract length with each increasing bin:
+As a last sanity check, if we use this time to compute the rate of exponential decay $\lambda$, we should get a nice fit of the theoretical exponential decay curve over the empirical counts of tract lengths in each bin. As a reminder, this is the decay:
 
 ```
+plot(bins, props)
+```
+
+Let's try if we can plot the theoretical exponential decay from the estimated time of admixture.
+
+First, because the exponential plot above shows the decay of the size of introgressed tracts in bins, the $\lambda$ parameter determines the decay with each sucessive bin. However, our recombination rate $r$ which features in the equation to compute $\lambda$ above describes recombination in units of base pairs, not bins. First compute the average increase in tract length as we move from bin to bin:
+
+```
+# compute the average length in each bin
 average_bins <- aggregate(length ~ bin, data = tracts, FUN = mean)
+
+# compute the difference between bins to get "average bin step size"
 bin_step <- mean(diff(average_bins$length))
 
 bin_step
 ```
 
 ```         
+r <- 1e-8 # crossovers per bp per generation
+t <- 1800 # time of admixture (in generations) we computed above
+
 lambda <- r * t * bin_step
 y <- dexp(bins, rate = lambda)
 
-plot(bins, props)
+plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion")
 lines(bins, y, col = "red")
 ```
