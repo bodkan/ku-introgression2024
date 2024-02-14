@@ -126,7 +126,7 @@ axis(side = 1, at = seq_along(X), labels = X)
 # (https://en.wikipedia.org/wiki/Bootstrapping_(statistics)).
 ```
 
----
+------------------------------------------------------------------------
 
 If you want to take a closer look at how the genotype data was prepared (it was simulated!), you can see the complete code [here](generate_genotypes.R).
 
@@ -151,17 +151,95 @@ The `gt` data set is a plain R data frame where each individual's column contain
 Familiarize yourself with the data by running this R command which shows information from only the first few genotypes:
 
 ```         
-head(gt)
+head(tracts)
 ```
 
 For how many individuals do we have information about Neanderthal DNA tracts that they carry?
 
-```
+```         
 length(unique(tracts$individual))
 ```
 
-It looks like the inference software (or a helpful bioinformatician) binned each tract according to its length. What does the distribution of Neanderthal tract lengths looks like in your data? Knowing that recombination has acted on the introgressed Neanderthal DNA over time, each generation, suggests that the distribution should look exponential -- do you see this in the data?
+It looks like the inference software (or a helpful bioinformatician) binned each tract according to its length. What does the distribution of Neanderthal tract lengths looks like in your data? Knowing that recombination has acted on the introgressed Neanderthal DNA over time, each generation, suggests that the distribution should look exponential -- do you see this in the data? To answer this, plot the proportion of tracts in each bin.
+
+```         
+# get the bin numbers
+bins <- sort(unique(tracts$bin))
+
+# count the tracts in each bin and compute the proportion of tracts in each bin
+counts <- as.integer(table(tracts$bin))
+props <- counts / sum(counts)
+
+plot(bins, props)
+```
+
+The distribution does, indeed, look quite exponential. We can verify this by plotting the distribution on a log-scale because this plot will -- in case of an exponential distribution -- look completely linear:
+
+```         
+plot(bins, log(props))
+
+# overlay a linear regresion line of the the log-scale plot
+lm_model <- lm(log(props) ~ bins)
+abline(lm_model)
+```
+
+Having verified the necessary assumptions, let's try to date the Neanderthal introgression using information encoded in the distribution of tract lengths!
+
+As we know, over time since admixture, recombination breaks up longer haplotypes into shorter one, regularly almost like a clock. And it turns out that the distribution of tract lengths after time `t` follows exponential decay, leading to the distribution of tract lengths `x` to have the following form:
+
+$$
+f(\textrm{x}) \sim \exp(-\lambda x) = \exp(-r t x)
+$$
+
+Where the $\lambda$ parameter determines the rate of exponential decay and, under some simplifying assumption can be computed as the product of the recombination rate (traditionally in humans with value of about $1e-8$) and $t$ which is the time since admixture.
+
+It also turns out that the slope of the linear regression fit we computed above is exactly expectation of this exponential decay (which can be computed simply as $1 \ \lambda$) gives us the expected tract length after time $t$. We can compute this empirically by taking the average introgressed tract length in our data like this:
+
+```         
+L <- mean(tracts$length)
+L # length in units of base pairs
+```
+
+Taking all the math together and doing a little algebra, we can write this:
+
+$$
+\textrm{average tract length} L = \frac{1}{\lambda} = \frac{1}{rt}
+$$
+
+But because we know $L$ (average tract length) and $r$ (recombination rate), this means we can get an estimate of the time since the admixture like this!
+
+$$
+t = \frac{1}{rL}
+$$
+
+This will be in generations, so we'll have to multiply this quantity by the generation time (roughly 30 years for humans) to get time in years before the present.
+
+Get the estimate of the admixture time now:
+
+```         
+r <- 1e-8 # crossovers per bp per generation
+
+t <- 1 / (r * L) * 30
+t
+```
+
+We got a value which fits very well the value of \~55 thousand years ago which is often find in the literature as the assumed time when Neanderthals and anatomically modern humans interbred!
+
+As a last sanity check, overlay the theoretical exponential decay curve over the empirical counts of tract lengths in each bin by computing the $\lambda$ decay rate:
+
+Compute the step of tract length with each increasing bin:
 
 ```
-hist(tracts$bin, breaks = 50)
+average_bins <- aggregate(length ~ bin, data = tracts, FUN = mean)
+bin_step <- mean(diff(average_bins$length))
+
+bin_step
+```
+
+```         
+lambda <- r * t * bin_step
+y <- dexp(bins, rate = lambda)
+
+plot(bins, props)
+lines(bins, y, col = "red")
 ```
