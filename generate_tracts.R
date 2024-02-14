@@ -9,7 +9,7 @@ afr <- population("AFR", parent = anc, N = 10000, time = 650000)
 nea <- population("NEA", parent = anc, N = 2000, time = 650000)
 eur <- population("EUR", parent = afr, N = 5000, time = 80000)
 
-gf <- gene_flow(from = nea, to = eur, rate = 0.03, start = 57000, end = 53000)
+gf <- gene_flow(from = nea, to = eur, rate = 0.03, start = 55000, end = 55000 - 30)
 
 model <- compile_model(
   populations = list(anc, afr, nea, eur), gene_flow = gf,
@@ -23,11 +23,11 @@ samples <- schedule_sampling(model, times = 0, list(eur, 100))
 
 ts <- msprime(model, sequence_length = 50e6, recombination_rate = 1e-8, samples = samples, random_seed = 42)
 
-tracts <- ts_tracts(ts, census = 57000, quiet = TRUE) %>%
+tracts <- ts_tracts(ts, census = 55000, quiet = TRUE) %>%
   dplyr::select(-node_id, -pop, -source_pop, -source_pop_id) %>%
   dplyr::rename(individual = name)
 
-n <- 10
+n <- 50
 tracts$bin <- cut(tracts$length, breaks = n, labels = FALSE)
 
 saveRDS(tracts, "tracts.rds")
