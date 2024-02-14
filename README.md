@@ -6,7 +6,7 @@
 
 *You sequenced the genomes of four Africans and four Eurasians and got genotypes from a single chromosome from each of them (so you have genotypes of four African and four Eurasian chromosomes). Unfortunately, there's been a mix up in the lab and you don't know which one is which! You only know that they are labeled A, B, C, ..., H. What a disaster!*
 
-*Fortunately, you also have genotypes from three other individuals whose identity you know for certain: an African, a Neanderthal, and a Chimpanzee. This means you are able to compute a D statistic which will test for evidence of Neanderthal introgression in a given individual.*
+*Fortunately, you also have genotypes from three other individuals whose identity you know for certain: an African, a Neanderthal, and a chimpanzee. This means that you are able to compute a D statistic which will test for evidence of Neanderthal introgression in a given sample $X$.*
 
 *Can you save the day and determine which of the A, B, C, ..., H samples are African and which are Eurasian based on the following D statistic test?*
 
@@ -14,7 +14,7 @@ $$
 D(\textrm{African}, X; \textrm{Neanderthal}, \textrm{Chimp}).
 $$
 
-*(Recall that only Eurasians are expected to have appreciable amounts of Neanderthal ancestry but Africans don't.)*
+*Recall that only Eurasians are expected to have appreciable amounts of Neanderthal ancestry but Africans don't.*
 
 ### Moving over to R
 
@@ -24,7 +24,7 @@ First load the genotype table into R:
 gt <- readRDS(url("https://github.com/bodkan/ku-introgression2024/raw/main/genotypes.rds"))
 ```
 
-The `gt` data set is a plain R data frame where each individual's column contains the genotype of that individual's chromosome (`0` - ancestral allele, `1` - derived allele).
+The `gt` data set is a plain R data frame where each column contains the genotype of that individual (`0` - ancestral allele, `1` - derived allele).
 
 Familiarize yourself with the data by running this R command which shows information from only the first few genotypes:
 
@@ -48,7 +48,7 @@ gt[["African"]]
 gt[["Neanderthal"]]
 ```
 
-Then we can use this to sum up how many positions of those two chromosomes carry the same allele:
+then we can sum up positions at which those two samples carry the same allele:
 
 ```         
 gt[["African"]] == gt[["Neanderthal"]] # this gives us TRUE/FALSE values 
@@ -59,10 +59,10 @@ gt[["African"]] == gt[["Neanderthal"]] # this gives us TRUE/FALSE values
 sum(gt[["African"]] == gt[["Neanderthal"]])
 ```
 
-On the other hand, this would count how many alleles are *different* between our African and Chimpanzee chromosome:
+On the other hand, this would count how many alleles are *different* between our African and chimpanzee chromosome:
 
 ```         
-sum(gt[["African"]] != gt[["Neanderthal"]]) # note the != instead of ==
+sum(gt[["African"]] != gt[["Chimp"]]) # note the != instead of ==
 ```
 
 Inside the `sum()` function we can compose multiple logical conditions to create more complex comparison operations using the `&` operator (AND operation in mathematical logic).
@@ -83,11 +83,21 @@ baba <- sum(
   (gt[["African"]] == gt[["Neanderthal"]]) &   # filters for B*B* sites
   (gt[[X]]         == gt[["Chimp"]])           # filters for *A*A sites
 )                                              # together then BABA
+```
 
+From these counts we can get an idea about whether one or the other are more frequently appearing in the data:
+
+```
 baba - abba
 ```
 
-**You know that if `X` is a African, you expect to see roughly the same count of `BABA` and `ABBA` site patterns, so the difference should "be about zero". Compute this for all of your mixed up chromosomes A, B, C, ..., H and note down the `baba - abba` values you got for each -- which ones are most likely African and which ones are Eurasian?**
+Finally, we can compute a D statistic like this, which simply normalizes the raw difference by how many observations of either BABA or ABBA site patterns we observed:
+
+```
+(baba - abba) / (baba + abba)
+```
+
+**You know that if `X` is a African, you expect to see roughly the same count of `BABA` and `ABBA` site patterns, so the difference should "be about zero". Use the code above to compute the D statistic for all of your mixed up samples A, B, C, ..., H and note down the values you got for each -- which samples are most likely African and which ones are Eurasian?**
 
 **[If you are more familiar with R, compute the counts automatically in a loop of some kind and make a figure.]**
 
@@ -121,9 +131,9 @@ abline(h = 0, lty = 2, col = "red")
 axis(side = 1, at = seq_along(X), labels = X)
 ```
 
-We can see that the samples A-D are consistent with a D statistic value of about 0, meaning that the BABA and ABBA counts were "about the same". This is what we would expect for African samples who are not expected to be closer to a Neanderthal genome than another African.
+We can see that the samples A-D are consistent with a D statistic "value of about 0"", meaning that the BABA and ABBA counts were "about the same". This is what we would expect for African samples who are not expected to be closer to a Neanderthal genome than another African.
 
-On the other hand, samples E-H show a much more negative value of the D statistic, which is consistent with an access of ABBA sites compared to BABA sites-- which arise with an increased sharing of derived alleles between the sample X and a Neanderthal genome as we would expect to be the case when X is of Eurasian ancestry.
+On the other hand, samples E-H show a much "more negative value of the D statistic"", which is consistent with an access of ABBA sites compared to BABA sites -- which arise with an increased sharing of derived alleles between the sample X and a Neanderthal genome, just as we would expect when X is of Eurasian ancestry.
 
 **Important:** In this simple example we're missing confidence intervals -- those would allow us to do a proper statistical test to determine for which samples we really cannot reject a null hypothesis of no gene flow from Neanderthals. This would allow us to avoid the vague and statistically unsatisfying talk about some value being "almost zero", and some other value being "much more negative" than that. The confidence interval for a given D statistic would either intersect the 0 null hypothesis or not.
 
@@ -175,7 +185,7 @@ bins <- sort(unique(tracts$bin))
 counts <- as.integer(table(tracts$bin))
 props <- counts / sum(counts)
 
-plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion")
+plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion of tracts")
 ```
 
 The distribution does, indeed, look quite exponential. Let's try to use this to date the Neanderthal introgression using information encoded in the distribution of tract lengths!
@@ -227,7 +237,7 @@ You should get a value will be quite close to \~55 thousand years ago, an estima
 As a last sanity check, if we use this time to compute the rate of exponential decay $\lambda$, we should get a nice fit of the theoretical exponential decay curve over the empirical counts of tract lengths in each bin. As a reminder, this is the decay:
 
 ```         
-plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion")
+plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion of tracts")
 ```
 
 Let's try if we can plot the theoretical exponential decay from the estimated time of admixture.
@@ -251,6 +261,11 @@ t <- 1800 # time of admixture (in generations) we computed above
 lambda <- r * bin_step * t
 y <- dexp(bins, rate = lambda)
 
-plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion")
+plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion of tracts")
 lines(bins, y, col = "red")
 ```
+
+
+------------------------------------------------------------------------
+
+If you want to take a closer look at how the tracts data was prepared (it was simulated!), you can see the complete code [here](generate_tracts.R).
