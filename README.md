@@ -129,9 +129,8 @@ reject a null hypothesis of no gene flow from Neanderthals. This way we can
 avoid the vague and statistically unsatisfying talk about a value being "almost zero",
 and some other value being "much more negative".
 
-Real-world software such as ADMIXTOOLS (https://github.com/DReichLab/AdmixTools) computes confidence
-intervals using a so-called bootstrap procedure across windows along a genome
-(https://en.wikipedia.org/wiki/Bootstrapping_(statistics)).
+Real-world software such as [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools) computes confidence
+intervals using a so-called [bootstrap](https://en.wikipedia.org/wiki/Bootstrapping_(statistics)) procedure across windows along a genome.
 
 ------------------------------------------------------------------------
 
