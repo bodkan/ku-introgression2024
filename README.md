@@ -219,7 +219,7 @@ $$
 
 Note that this time estimate will be in units of generations, so we'll have to multiply this quantity by the generation time (roughly 30 years for humans) to get time in years before the present.
 
-We can use this equation to compute the estimate of the admixture time now:
+**Use this simple equation to compute the estimate of the admixture time:**
 
 ```         
 r <- 1e-8 # crossovers per bp per generation
@@ -233,6 +233,10 @@ t * 30
 ```
 
 You should get a value will be quite close to \~55 thousand years ago, an estimate which is often found in the literature as the time when Neanderthals and anatomically modern humans interbred!
+
+---
+
+**Bonus:**
 
 As a last sanity check, if we use this time to compute the rate of exponential decay $\lambda$, we should get a nice fit of the theoretical exponential decay curve over the empirical counts of tract lengths in each bin. As a reminder, this is the decay:
 
