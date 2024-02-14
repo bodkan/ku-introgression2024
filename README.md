@@ -242,7 +242,7 @@ plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion of t
 
 Let's try if we can plot the theoretical exponential decay from the estimated time of admixture.
 
-First, because the exponential plot above shows the decay of the size of introgressed tracts in bins, the $\lambda$ parameter determines the decay with each sucessive bin. However, our recombination rate $r$ which features in the equation to compute $\lambda$ above describes recombination in units of base pairs, not bins. First compute the average increase in tract length as we move from bin to bin:
+First, because the exponential tract decay you plotted above shows the decay of the length of introgressed tracts in bins, the $\lambda$ parameter determines the decay expected for tracts falling into to successive bins (so decay of longer and longer tracts). However, our recombination rate $r$ which features in the equation to compute $\lambda$ above describes recombination in units of base pairs, not bins. In order to be able to plot the theoretical exponential decay curve, we therefore first need to compute the average increase in tract lengths from bin to bin:
 
 ```         
 # compute the average length in each bin
@@ -254,17 +254,21 @@ bin_step <- mean(diff(average_bins$length))
 bin_step
 ```
 
+With this, we can overlay the theoretical exponential decay expectation across the empirical distribution of tract lengths in different bins:
+
 ```         
 r <- 1e-8 # crossovers per bp per generation
 t <- 1800 # time of admixture (in generations) we computed above
 
+# plot the empirical proportions of tracts in each bin
+plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion of tracts")
+
+# overlay theoretical exponential density curve assuming recombination rate r
+# and time of introgression t generations ago
 lambda <- r * bin_step * t
 y <- dexp(bins, rate = lambda)
-
-plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion of tracts")
-lines(bins, y, col = "red")
+lines(bins, y, col = "red", lty = 2)
 ```
-
 
 ------------------------------------------------------------------------
 
