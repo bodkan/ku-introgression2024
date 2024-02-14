@@ -95,7 +95,7 @@ baba - abba
 
 ------------------------------------------------------------------------
 
-If you're not comfortable with R, feel free to run this in full and answer the questions based on what you see:
+If you're not comfortable with R, feel free to run this in full and answer the questions based on the results you get:
 
 ```         
 X <- c("A", "B", "C", "D", "E", "F", "G", "H")
@@ -227,7 +227,7 @@ You should get a value will be quite close to \~55 thousand years ago, an estima
 As a last sanity check, if we use this time to compute the rate of exponential decay $\lambda$, we should get a nice fit of the theoretical exponential decay curve over the empirical counts of tract lengths in each bin. As a reminder, this is the decay:
 
 ```         
-plot(bins, props)
+plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion")
 ```
 
 Let's try if we can plot the theoretical exponential decay from the estimated time of admixture.
@@ -248,7 +248,7 @@ bin_step
 r <- 1e-8 # crossovers per bp per generation
 t <- 1800 # time of admixture (in generations) we computed above
 
-lambda <- r * t * bin_step
+lambda <- r * bin_step * t
 y <- dexp(bins, rate = lambda)
 
 plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion")
