@@ -198,7 +198,7 @@ $$
 
 where the $\lambda$ parameter determines the *rate* of exponential decay which can be computed, under some simplifying assumptions, as the product of the recombination rate (traditionally in humans with value of about $10^{-8}$) and $t$ which is the time since admixture -- **the latter is our unknown we're trying to compute here**.
 
-It also turns out that the expected value of this exponential distribution (which [can be computed](https://en.wikipedia.org/wiki/Exponential_distribution#Mean,_variance,_moments,_and_median) simply as $1 / \lambda$) gives us the expected tract length after time $t$. We can get an estimate of the expected length of an introgressed fragment simply by computing the average introgressed tract length observed in our data:
+It also turns out that the expected value of this exponential distribution (which [can be computed](https://en.wikipedia.org/wiki/Exponential_distribution#Mean,_variance,_moments,_and_median) simply as $1 / \lambda$) gives us the expected tract length after time $t$. Knowing this, **get an estimate of the expected length of an introgressed fragment simply by computing the average introgressed tract length observed in data:**
 
 ```         
 L <- mean(tracts$length)
