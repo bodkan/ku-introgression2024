@@ -44,18 +44,18 @@ gt <- dplyr::rename(
   E = Europeans_1, F = Europeans_2, G = Europeans_3, H = Europeans_4
 ) %>% dplyr::select(pos, African, Neanderthal, Chimp, dplyr::everything())
 
-# subsample genotypes to a more manageable size
-set.seed(12345)
-gt <- dplyr::sample_n(gt, 300000) %>% dplyr::arrange(pos)
-
-invariant <- dplyr::select(gt, -pos) %>% rowMeans() %>% {. == 0 | . == 1}
-fixed <- dplyr::select(gt, -pos, -Chimp) %>%
-  rowMeans() %>%
-  {. == 0 | . == 1} %>%
-  {(. - gt$Chimp) != 0}
-gt <- gt[!invariant & !fixed, ]
-
-set.seed(19)
-gt <- dplyr::sample_n(gt, 100000) %>% dplyr::arrange(pos)
+# # subsample genotypes to a more manageable size
+# set.seed(12345)
+# gt <- dplyr::sample_n(gt, 300000) %>% dplyr::arrange(pos)
+#
+# invariant <- dplyr::select(gt, -pos) %>% rowMeans() %>% {. == 0 | . == 1}
+# fixed <- dplyr::select(gt, -pos, -Chimp) %>%
+#   rowMeans() %>%
+#   {. == 0 | . == 1} %>%
+#   {(. - gt$Chimp) != 0}
+# gt <- gt[!invariant & !fixed, ]
+#
+# set.seed(19)
+# gt <- dplyr::sample_n(gt, 100000) %>% dplyr::arrange(pos)
 
 saveRDS(gt, "genotypes.rds")
