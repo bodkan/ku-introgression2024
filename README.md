@@ -196,7 +196,7 @@ $$
 \textrm{tract length of }~x \sim \exp(-\lambda x) = \exp(-r t x),
 $$
 
-where the $\lambda$ parameter determines the *rate* of exponential decay which can be computed, under some simplifying assumptions, as the product of the recombination rate (traditionally in humans with value of about $1e-8$) and $t$ which is the time since admixture -- **the latter is our unknown we're trying to compute here**.
+where the $\lambda$ parameter determines the *rate* of exponential decay which can be computed, under some simplifying assumptions, as the product of the recombination rate (traditionally in humans with value of about $10^{-8}$) and $t$ which is the time since admixture -- **the latter is our unknown we're trying to compute here**.
 
 It also turns out that the [expected value](https://en.wikipedia.org/wiki/Exponential_distribution#Mean,_variance,_moments,_and_median) of this exponential distribution (which can be computed simply as $1 / \lambda$) gives us the expected tract length after time $t$. Starting from our data, we can compute this expected length simply by computing the average introgressed tract length in our data like this:
 
