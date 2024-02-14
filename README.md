@@ -132,6 +132,7 @@ and some other value being "much more negative".
 Real-world software such as ADMIXTOOLS (https://github.com/DReichLab/AdmixTools) computes confidence
 intervals using a so-called bootstrap procedure across windows along a genome
 (https://en.wikipedia.org/wiki/Bootstrapping_(statistics)).
+
 ------------------------------------------------------------------------
 
 If you want to take a closer look at how the genotype data was prepared (it was simulated!), you can see the complete code [here](generate_genotypes.R).
