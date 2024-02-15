@@ -224,6 +224,9 @@ abline(h = 3, lty = 2, col = "red")
 
 **We did we not plot the proportion of Neanderthal ancestry in the very last item of the `proportions` variable? What does that last element of the vector `proportions` contain and why?**
 
+------------------------------------------------------------------------
+
+If you want to take a closer look at how the genotype data was prepared (it was simulated!), you can see the complete code [here](generate_genotypes.R).
 
 
 
