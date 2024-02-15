@@ -286,9 +286,9 @@ $$
 \lambda = rt
 $$
 
-**The $t$ in this equation latter is our unknown we're trying to compute in this exercise.**
+The $t$ in this equation latter is our unknown we're trying to compute in this exercise.
 
-It also turns out that the expected value of this exponential distribution (which [can be computed](https://en.wikipedia.org/wiki/Exponential_distribution#Mean,_variance,_moments,_and_median) simply as $1 / \lambda$) gives us the expected tract length after time $t$. Knowing this, **get an estimate of the expected length of an introgressed fragment after (unknown) time $t$ by computing the average introgressed tract length observed in data:**
+It also turns out that the expected value of this exponential distribution (which [can be computed](https://en.wikipedia.org/wiki/Exponential_distribution#Mean,_variance,_moments,_and_median) simply as $1 / \lambda = 1 / rt$) gives us the expected tract length after time $t$. Knowing this, **get an estimate of the expected length of an introgressed fragment after (unknown) time $t$ by computing the average introgressed tract length observed in data:**
 
 ```         
 L <- mean(tracts$length)
