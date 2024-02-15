@@ -19,7 +19,7 @@ true_model <- compile_model(
 
 samples <- schedule_sampling(
   true_model, times = 0,
-  list(eur, 4), list(afr, 5), list(nea, 2), list(chimp, 1)
+  list(eur, 4), list(afr, 5), list(nea, 1), list(chimp, 1)
 )
 
 # plot_model(true_model, proportions = TRUE,
@@ -38,24 +38,23 @@ colnames(gt) <- gsub("_chr1", "", colnames(gt))
 
 # rename individuals to make them easier to work with
 gt <- dplyr::rename(
-  gt, African = Africans_1, Neanderthal = Neanderthals_1,
-  another_Neanderthal = Neanderthals_2, Chimp = Chimpanzees_1,
+  gt, African = Africans_1, Neanderthal = Neanderthals_1, Chimp = Chimpanzees_1,
   A = Africans_2, B = Africans_3, C = Africans_4, D = Africans_5,
   E = Europeans_1, F = Europeans_2, G = Europeans_3, H = Europeans_4
 ) %>% dplyr::select(pos, African, Neanderthal, Chimp, dplyr::everything())
 
-# # subsample genotypes to a more manageable size
-# set.seed(12345)
-# gt <- dplyr::sample_n(gt, 300000) %>% dplyr::arrange(pos)
-#
-# invariant <- dplyr::select(gt, -pos) %>% rowMeans() %>% {. == 0 | . == 1}
-# fixed <- dplyr::select(gt, -pos, -Chimp) %>%
-#   rowMeans() %>%
-#   {. == 0 | . == 1} %>%
-#   {(. - gt$Chimp) != 0}
-# gt <- gt[!invariant & !fixed, ]
-#
-# set.seed(19)
-# gt <- dplyr::sample_n(gt, 100000) %>% dplyr::arrange(pos)
+# subsample genotypes to a more manageable size
+set.seed(12345)
+gt <- dplyr::sample_n(gt, 300000) %>% dplyr::arrange(pos)
+
+invariant <- dplyr::select(gt, -pos) %>% rowMeans() %>% {. == 0 | . == 1}
+fixed <- dplyr::select(gt, -pos, -Chimp) %>%
+  rowMeans() %>%
+  {. == 0 | . == 1} %>%
+  {(. - gt$Chimp) != 0}
+gt <- gt[!invariant & !fixed, ]
+
+set.seed(19)
+gt <- dplyr::sample_n(gt, 100000) %>% dplyr::arrange(pos)
 
 saveRDS(gt, "genotypes.rds")
