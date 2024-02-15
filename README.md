@@ -299,7 +299,7 @@ L # length in units of base pairs
 
 **What is the average length of a chunk of a Neanderthal DNA in a Eurasian genome?**
 
-Taking all the math together and doing a little algebra, we can express the average expected length of an introgressed fragment after time $t$ using this formula:
+Taking the simple math above together and doing a little algebra, we can express the average expected length of an introgressed fragment after time $t$ using this formula:
 
 $$
 \textrm{average tract length}~L = \frac{1}{\lambda} = \frac{1}{rt}
