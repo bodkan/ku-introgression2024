@@ -45,4 +45,8 @@ gt <- dplyr::rename(
   E = Europeans_1, F = Europeans_2, G = Europeans_3, H = Europeans_4
 ) %>% dplyr::select(pos, African, Neanderthal, Chimp, dplyr::everything())
 
-saveRDS(gt, "genotypes.rds")
+# genotypes without "another_Neanderthal"
+saveRDS(gt, "genotypes_ex1.rds")
+
+# genotypes with "another_Neanderthal"
+saveRDS(gt[, -ncol(gt)], "genotypes_ex2.rds")
