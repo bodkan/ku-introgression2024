@@ -289,6 +289,8 @@ L <- mean(tracts$length)
 L # length in units of base pairs
 ```
 
+**Given this, what is the average length of a chunk of a Neanderthal DNA in a Eurasian genome?**
+
 Taking all the math together and doing a little algebra, we can express the expected length of an introgressed fragment like this:
 
 $$
