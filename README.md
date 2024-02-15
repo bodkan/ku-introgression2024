@@ -1,35 +1,41 @@
 # Archaic introgression lecture exercises (February 2024)
 
-## Exercise 1 -- D statistics / introgression test
+## Exercise 1 -- $f_4$ statistic / introgression test
 
 ### Introduction
 
 *You sequenced the genomes of four Africans and four Eurasians and got genotypes from a single chromosome from each of them (so you have genotypes of four African and four Eurasian chromosomes). Unfortunately, there's been a mix up in the lab and you don't know which one is which! You only know that they are labeled A, B, C, ..., H. What a disaster!*
 
-*Fortunately, you also have genotypes from three other individuals whose identity you know for certain: an African, a Neanderthal, and a chimpanzee. This means that you are able to compute a D statistic which will test for evidence of Neanderthal introgression in a given sample $X$.*
+*Fortunately, you also have genotypes from three other individuals whose identity you know for certain: an African, a Neanderthal, and a chimpanzee. This means that you are able to compute an $f_4$ statistic which will test for evidence of Neanderthal introgression in a given sample $X$.*
 
-*Can you save the day and determine which of the A, B, C, ..., H samples are African and which are Eurasian based on the following D statistic test?*
+*Can you save the day and determine which of the A, B, C, ..., H samples are African and which are Eurasian based on the following $f_4$ statistic test?*
 
 $$
-D(\textrm{African}, X; \textrm{Neanderthal}, \textrm{Chimp}).
+f_4(\textrm{African}, X; \textrm{Neanderthal}, \textrm{Chimp}).
 $$
 
 *Recall that only Eurasians are expected to have appreciable amounts of Neanderthal ancestry but Africans don't.*
 
 ### Moving over to R
 
-First load the genotype table into R:
+First **load the genotype table into R**:
 
 ```         
-gt <- readRDS(url("https://github.com/bodkan/ku-introgression2024/raw/main/genotypes.rds"))
+gt <- readRDS(url("https://github.com/bodkan/ku-introgression2024/raw/main/genotypes_ex1.rds"))
 ```
 
 The `gt` data set is a plain R data frame where each column contains the genotype of that individual (`0` - ancestral allele, `1` - derived allele).
 
-Familiarize yourself with the data by running this R command which shows information from only the first few genotypes:
+**Familiarize yourself with the data** by running this R command which shows information from only the first few genotypes:
 
 ```         
 head(gt)
+```
+
+**How many positions of the genome do we have genotyped?**
+
+```
+nrow(gt)
 ```
 
 You can extract *all the genotypes* of a given individual by using the `$` or `[[` subsetting operators of R data frames like this:
@@ -91,17 +97,17 @@ From these counts we can get an idea about whether one or the other are more fre
 baba - abba
 ```
 
-Finally, we can compute a D statistic like this, which simply normalizes the raw difference by how many observations of either BABA or ABBA site patterns we observed:
+Finally, we can compute an $f_4$ statistic like this, which simply normalizes the raw difference by how many observations of either BABA or ABBA site patterns we observed:
 
 ```
-(baba - abba) / (baba + abba)
+(baba - abba) / nrow(gt)
 ```
 
-**You know that if `X` is a African, you expect to see roughly the same count of `BABA` and `ABBA` site patterns, so the difference should "be about zero". Use the code above to compute the D statistic for all of your mixed up samples A, B, C, ..., H and note down the values you got for each -- which samples are most likely African and which ones are Eurasian?**
+**You know that if `X` is a African, you expect to see roughly the same count of `BABA` and `ABBA` site patterns, so the difference should "be about zero". Use the code above to compute the $f_4$ statistic for all of your mixed up samples A, B, C, ..., H and note down the values you got for each -- which samples are most likely African and which ones are Eurasian?**
 
 **[If you are more familiar with R, compute the counts automatically in a loop of some kind and make a figure.]**
 
-**What does it mean for a test statistic to "be about zero"? What are we missing to truly use this as a statistical significance test?**
+**What does it mean for this test statistic to "be about zero"? What are we missing to truly use this as a statistical significance test?**
 
 ------------------------------------------------------------------------
 
@@ -110,7 +116,7 @@ If you're not comfortable with R, feel free to run this in full and answer the q
 ```         
 X <- c("A", "B", "C", "D", "E", "F", "G", "H")
 
-D_values <- sapply(X, function(x) {
+f4_values <- sapply(X, function(x) {
   abba <- sum(
     (gt[["African"]] == gt[["Chimp"]]) &         # filters for A**A sites
     (gt[["African"]] != gt[["Neanderthal"]]) &   # filters for A*B* sites
@@ -123,19 +129,19 @@ D_values <- sapply(X, function(x) {
     (gt[[x]]         == gt[["Chimp"]])           # filters for *A*A sites
   )                                              # together then BABA
   
-  (baba - abba) / (baba + abba)
+  (baba - abba) / nrow(gt)
 })
 
-plot(D_values, xaxt = "n", xlab = "test sample", ylab = " D(African, X; Neanderthal, Chimp)")
+plot(f4_values, xaxt = "n", xlab = "test sample", ylab = "f4(African, X; Neanderthal, Chimp)")
 abline(h = 0, lty = 2, col = "red")
 axis(side = 1, at = seq_along(X), labels = X)
 ```
 
-We can see that the samples A-D are consistent with a D statistic "value of about 0"", meaning that the BABA and ABBA counts were "about the same". This is what we would expect for African samples who are not expected to be closer to a Neanderthal genome than another African.
+We can see that the samples A-D are consistent with an $f_4$ statistic "value of about 0"", meaning that the BABA and ABBA counts were "about the same". This is what we would expect for African samples who are not expected to be closer to a Neanderthal genome than another African.
 
 On the other hand, samples E-H show a much "more negative value of the D statistic"", which is consistent with an access of ABBA sites compared to BABA sites -- which arise with an increased sharing of derived alleles between the sample X and a Neanderthal genome, just as we would expect when X is of Eurasian ancestry.
 
-**Important:** In this simple example we're missing confidence intervals -- those would allow us to do a proper statistical test to determine for which samples we really cannot reject a null hypothesis of no gene flow from Neanderthals. This would allow us to avoid the vague and statistically unsatisfying talk about some value being "almost zero", and some other value being "much more negative" than that. The confidence interval for a given D statistic would either intersect the 0 null hypothesis or not.
+**Important:** In this simple example we're missing confidence intervals -- those would allow us to do a proper statistical test to determine for which samples we really cannot reject a null hypothesis of no gene flow from Neanderthals. This would allow us to avoid the vague and statistically unsatisfying talk about some value being "almost zero", and some other value being "much more negative" than that. The confidence interval for a given $f_4$ statistic would either intersect the 0 null hypothesis or not. For an example, see Figure 3 in [this paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6485383/).
 
 Real-world software such as [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools) computes confidence intervals using a so-called [bootstrap](https://en.wikipedia.org/wiki/Bootstrapping_(statistics)) procedure across windows along a genome.
 
@@ -143,7 +149,85 @@ Real-world software such as [ADMIXTOOLS](https://github.com/DReichLab/AdmixTools
 
 If you want to take a closer look at how the genotype data was prepared (it was simulated!), you can see the complete code [here](generate_genotypes.R).
 
-## Exercise 2 -- dating Neanderthal admixture
+
+## Exercise 2 -- estimating the proportion of Neanderthal ancestry
+
+### Introduction
+
+*Having saved the day by identifying which of the A-H samples are of African or Eurasian origin by testing which of them appear to carry evidence of Neanderthal introgression, you now want to estimate how much of their genome derives from the Neanderthals. In order to do this, you need to compute a ratio of $f_4$ values as described in the lecture.*
+
+*Of course, in order to compute this $f_4$-ratio estimate, you will need "another Neanderthal" genome! Luckily, we now have genomes of several Neanderthals so this is not an issue and a local friendly bioinformatician merged you `gt` genotype table with the genotypes of "another Neanderthal".*
+
+*Estimate the proportion of Neanderthal ancestry in each of your A-H samples!*
+
+### Moving over to R
+
+**You will be using the same genotype table as in the previous exercise, with one additional column called `another_Neanderthal`. You can load it again like this:**
+
+```
+gt <- readRDS(url("https://github.com/bodkan/ku-introgression2024/raw/main/genotypes_ex2.rds"))
+```
+
+As always, **verify that the format of the data set you have matches what you expect:**
+
+```
+head(gt)
+
+nrow(gt)
+```
+
+From the lecture you know that we can get an estimate for the proportion of Neanderthal ancestry in a sample $X$ by dividing the rate of allele sharing between $X$ and a Neanderthal genome (one $f_4$ statistic) by the rate of allele sharing expected between two Neanderthals (another $f_4$ statistic).
+
+**Take the $f_4$ values you computed in Exercise 1 for all samples A-H, and estimate the proportion of Neanderthal ancestry in these samples by dividing those values by newly computed $f_4(\textrm(African, another Neanderthal; Neanderthal, Chimp))$.**
+
+```
+# we can compute the f4 values for everyone (A-H samples as well as
+# "another_neanderthal") using the same code as above
+X <- c("A", "B", "C", "D", "E", "F", "G", "H",
+       "another_Neanderthal") # <---- we added this to our loop
+
+f4_values <- sapply(X, function(x) {
+  abba <- sum(
+    (gt[["African"]] == gt[["Chimp"]]) &         # filters for A**A sites
+    (gt[["African"]] != gt[["Neanderthal"]]) &   # filters for A*B* sites
+    (gt[[x]]         == gt[["Neanderthal"]])     # filters for *BB* sites
+  )                                              # together then ABBA
+  
+  baba <- sum(
+    (gt[["African"]] != gt[["Chimp"]]) &         # filters for B**A sites
+    (gt[["African"]] == gt[["Neanderthal"]]) &   # filters for B*B* sites
+    (gt[[x]]         == gt[["Chimp"]])           # filters for *A*A sites
+  )                                              # together then BABA
+  
+  (baba - abba) / nrow(gt)
+})
+
+
+# to arrive at the estimate of Neanderthal ancestry, we divide f4 values for
+# samples A-H by f4 value comparing the two Neanderthals
+proportions <- f4_values / f4_values["another_Neanderthal"]
+
+proportions
+```
+
+To make the results clearer to see, let's visualize them:
+
+```
+plot(proportions[-length(proportions)] * 100,
+     xlab = "test individual", ylab = "proportion of Neanderthal ancestry [%]",
+     ylim = c(0, 10))
+
+abline(h = 3, lty = 2, col = "red")
+```
+
+**How much Neanderthal ancestry did you estimate in Africans vs Eurasians? Do those numbers fit what you've learned from the lecture?**
+
+**We did we not plot the proportion of Neanderthal ancestry in the very last item of the `proportions` variable? What does that last element of the vector `proportions` contain and why?**
+
+
+
+
+## Exercise 3 -- dating Neanderthal admixture
 
 ### Introduction
 
