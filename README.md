@@ -280,7 +280,13 @@ $$
 \textrm{tract length of }~x \sim \exp(-\lambda x) = \exp(-r t x),
 $$
 
-where the $\lambda$ parameter determines the *rate* of exponential decay which can be computed, under some simplifying assumptions, as the product of the recombination rate (traditionally in humans with value of about $10^{-8}$) and $t$ which is the time since admixture -- **the latter is our unknown we're trying to compute here**.
+where the $\lambda$ parameter determines the *rate* of exponential decay which can be computed, under some simplifying assumptions, as the product of the recombination rate (traditionally in humans with value of about $10^{-8}$) and $t$ which is the time since admixture:
+
+$$
+\lambda = rt
+$$
+
+**The $t$ in this equation latter is our unknown we're trying to compute in this exercise.**
 
 It also turns out that the expected value of this exponential distribution (which [can be computed](https://en.wikipedia.org/wiki/Exponential_distribution#Mean,_variance,_moments,_and_median) simply as $1 / \lambda$) gives us the expected tract length after time $t$. Knowing this, **get an estimate of the expected length of an introgressed fragment after (unknown) time $t$ by computing the average introgressed tract length observed in data:**
 
@@ -291,7 +297,7 @@ L # length in units of base pairs
 
 **Given this, what is the average length of a chunk of a Neanderthal DNA in a Eurasian genome?**
 
-Taking all the math together and doing a little algebra, we can express the expected length of an introgressed fragment like this:
+Taking all the math together and doing a little algebra, we can express the average expected length of an introgressed fragment after time $t$ using this formula:
 
 $$
 \textrm{average tract length}~L = \frac{1}{\lambda} = \frac{1}{rt}
