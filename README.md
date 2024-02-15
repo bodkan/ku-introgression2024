@@ -317,6 +317,7 @@ Note that this time estimate will be in units of generations, so we'll have to m
 
 ```         
 r <- 1e-8 # crossovers per bp per generation
+L <- mean(tracts$length) # average tract length after time t
 
 t <- 1 / (r * L)
 t
