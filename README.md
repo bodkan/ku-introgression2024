@@ -305,7 +305,7 @@ $$
 \textrm{average tract length}~L = \frac{1}{\lambda} = \frac{1}{rt}
 $$
 
-**But because we know $L$ (average tract length) and $r$ (recombination rate), this means we can get an estimate of the time since the admixture by a simple rearrangement of the above equation to get the time of introgression $t$ -- which is what we're trying to estimate in this exercise:**
+**But because we know $L$ (average tract length as you just computed) and $r$ (recombination rate of 10^{-8}), this means we can estimate the time since the admixture by a simple rearrangement of the above equation to separate the time of introgression $t$:**
 
 $$
 t = \frac{1}{rL}
