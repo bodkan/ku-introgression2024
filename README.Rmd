@@ -1,10 +1,16 @@
+---
+params:
+    eval: FALSE
+---
+    
 # Archaic introgression lecture exercises (February 2024)
 
 ```{r}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "figures/"
+  fig.path = "figures/",
+  eval = params$eval
 )
 ```
 
