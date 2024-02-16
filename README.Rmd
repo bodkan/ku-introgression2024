@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
 
 ## Exercise 1 -- $f_4$ statistic / introgression test
 
+If you want to see this document with all the results (numbers and plots) included, click [here](README_solutions.md).
+
 ### Introduction
 
 *You sequenced the genomes of four Africans and four Eurasians and got genotypes from a single chromosome from each of them (so you have genotypes of four African and four Eurasian chromosomes). Unfortunately, there's been a mix up in the lab and you don't know which one is which! You only know that they are labeled A, B, C, ..., H. What a disaster!*

@@ -3,6 +3,9 @@ Archaic introgression lecture exercises (February 2024)
 
 ## Exercise 1 – $f_4$ statistic / introgression test
 
+If you want to see this document with all the results (numbers and
+plots) included, click [here](README_solutions.md).
+
 ### Introduction
 
 *You sequenced the genomes of four Africans and four Eurasians and got
