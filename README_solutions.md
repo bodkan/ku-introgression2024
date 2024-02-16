@@ -453,8 +453,8 @@ L # length in units of base pairs
 #> [1] 53227.53
 ```
 
-**What is the average length of a chunk of a Neanderthal DNA in a
-Eurasian genome?**
+**What did you compute as the average length of a chunk of a Neanderthal
+DNA in a Eurasian genome?**
 
 Taking the simple math above together and doing a little algebra, we can
 express the average expected length of an introgressed fragment after
