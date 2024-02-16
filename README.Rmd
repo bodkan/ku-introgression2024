@@ -323,10 +323,6 @@ L # length in units of base pairs
 Taking the simple math above together and doing a little algebra, we can express the average expected length of an introgressed fragment after time $t$ using this formula:
 
 $$
-\lambda = rt
-$$
-
-$$
 \textrm{average tract length}~L = \frac{1}{\lambda} = \frac{1}{rt}
 $$
 
