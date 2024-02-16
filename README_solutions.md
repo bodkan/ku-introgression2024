@@ -436,8 +436,8 @@ $$
 \lambda = rt
 $$
 
-The $t$ in this equation latter is our unknown we’re trying to compute
-in this exercise.
+**The $t$ in this equation latter is our unknown we’re trying to compute
+in this exercise.**
 
 It also turns out that the expected value of this exponential
 distribution (which [can be
