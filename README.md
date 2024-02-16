@@ -1,15 +1,6 @@
 Archaic introgression lecture exercises (February 2024)
 ================
 
-``` r
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "figures/",
-  eval = params$eval
-)
-```
-
 ## Exercise 1 – $f_4$ statistic / introgression test
 
 ### Introduction
