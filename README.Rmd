@@ -56,7 +56,7 @@ nrow(gt)
 
 You can extract *all the genotypes* of a given individual by using the `$` or `[[` subsetting operators of R data frames like this:
 
-```{r}
+```{r, results = "hide"}
 gt$African
 
 gt[["African"]]
@@ -64,7 +64,7 @@ gt[["African"]]
 
 A useful trick for comparing two chromosomes in their entirety is to rely in the fact that R can perform *vectorized operations* (operations performed on multiple elements of a vector at once). For instance, if this gives us the genotypes of an African and Neanderthal chromosome:
 
-```{r}
+```{r, results = "hide"}
 gt[["African"]]
 
 gt[["Neanderthal"]]
@@ -72,7 +72,7 @@ gt[["Neanderthal"]]
 
 then we can sum up positions at which those two samples carry the same allele:
 
-```{r}
+```{r, results = "hide"}
 gt[["African"]] == gt[["Neanderthal"]] # this gives us TRUE/FALSE values 
 
 # sum() treats TRUE as 1 and FALSE as 0, so we can sum everything up!
