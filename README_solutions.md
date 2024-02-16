@@ -273,7 +273,7 @@ $f_4$ statistic).
 **Take the $f_4$ values you computed in Exercise 1 for all samples A-H,
 and estimate the proportion of Neanderthal ancestry in these samples by
 dividing those values by newly computed
-$f_4(\textrm(African, another Neanderthal; Neanderthal, Chimp))$.**
+$f_4(\textrm{African, another Neanderthal; Neanderthal, Chimp})$.**
 
 ``` r
 # we can compute the f4 values for everyone (A-H samples as well as
