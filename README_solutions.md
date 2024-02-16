@@ -136,8 +136,8 @@ baba - abba
 ```
 
 Finally, we can compute an $f_4$ statistic like this, which simply
-normalizes the raw difference by how many observations of either BABA or
-ABBA site patterns we observed:
+normalizes the raw difference between BABA and ABBA counts by how many
+SNPs we have in our data set:
 
 ``` r
 (baba - abba) / nrow(gt)
