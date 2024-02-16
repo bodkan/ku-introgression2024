@@ -300,7 +300,7 @@ abline(h = 3, lty = 2, col = "red")
 **How much Neanderthal ancestry did you estimate in Africans vs
 Eurasians? Do those numbers fit what you’ve learned from the lecture?**
 
-**We did we not plot the proportion of Neanderthal ancestry in the very
+**Why did we not plot the proportion of Neanderthal ancestry in the very
 last item of the `proportions` variable? What does that last element of
 the vector `proportions` contain and why?**
 
