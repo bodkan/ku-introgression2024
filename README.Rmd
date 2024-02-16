@@ -1,10 +1,12 @@
----
-output: 
-  github_document:
-    html_preview: false
----
-
 # Archaic introgression lecture exercises (February 2024)
+
+```{r}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "figures/"
+)
+```
 
 ## Exercise 1 -- $f_4$ statistic / introgression test
 
@@ -119,7 +121,7 @@ Finally, we can compute an $f_4$ statistic like this, which simply normalizes th
 
 If you're not comfortable with R, feel free to run this in full and answer the questions based on the results you get:
 
-```{r}
+```{r f4}
 X <- c("A", "B", "C", "D", "E", "F", "G", "H")
 
 f4_values <- sapply(X, function(x) {
@@ -218,7 +220,7 @@ proportions
 
 To make the results clearer to see, let's visualize them:
 
-```{r}
+```{r f4ratio}
 plot(proportions[-length(proportions)] * 100,
      xlab = "test individual", ylab = "proportion of Neanderthal ancestry [%]",
      ylim = c(0, 10))
@@ -270,7 +272,7 @@ length(unique(tracts$individual))
 
 It looks like the inference software (or a helpful bioinformatician) binned each tract according to its length. **What does the distribution of Neanderthal tract lengths looks like in your data?** Knowing that recombination has acted on the introgressed Neanderthal DNA over time, each generation, suggests that the distribution should look exponential -- do you see this in the data? To answer this, plot the proportion of tracts in each bin.
 
-```{r}
+```{r tract_bins}
 # get the bin numbers
 bins <- sort(unique(tracts$bin))
 
@@ -344,7 +346,7 @@ You should get a value will be quite close to \~55 thousand years ago, an estima
 
 As a last sanity check, if we use this time to compute the rate of exponential decay $\lambda$, we should get a nice fit of the theoretical exponential decay curve over the empirical counts of tract lengths in each bin. As a reminder, this is the decay:
 
-```{r}
+```{r tract_bins2}
 plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion of tracts")
 ```
 
@@ -364,7 +366,7 @@ bin_step
 
 With this, we can overlay the theoretical exponential decay expectation across the empirical distribution of tract lengths in different bins:
 
-```{r}
+```{r tract_fit}
 r <- 1e-8 # crossovers per bp per generation
 t <- 1800 # time of admixture (in generations) we computed above
 
