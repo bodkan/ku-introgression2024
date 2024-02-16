@@ -464,6 +464,10 @@ express the average expected length of an introgressed fragment after
 time $t$ using this formula:
 
 $$
+\lambda = rt
+$$
+
+$$
 \textrm{average tract length}~L = \frac{1}{\lambda} = \frac{1}{rt}
 $$
 
