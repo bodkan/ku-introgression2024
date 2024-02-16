@@ -388,7 +388,7 @@ $$
 where the $\lambda$ parameter determines the *rate* of exponential decay
 which can be computed, under some simplifying assumptions, as the
 product of the recombination rate (traditionally in humans with value of
-about $10^{-8}$) and $t$ which is the time since admixture:
+about $1 \times 10^{-8}$) and $t$ which is the time since admixture:
 
 $$
 \lambda = rt
