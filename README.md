@@ -221,8 +221,8 @@ need to compute a ratio of $f_4$ values as described in the lecture.*
 *Of course, in order to compute this $f_4$-ratio estimate, you will need
 “another Neanderthal” genome! Luckily, we now have genomes of several
 Neanderthals so this is not an issue and a local friendly
-bioinformatician merged you `gt` genotype table with the genotypes of
-“another Neanderthal”.*
+bioinformatician has already presciently merged your `gt` genotype table
+from the first exercise with the genotypes of “another Neanderthal”.*
 
 *Estimate the proportion of Neanderthal ancestry in each of your A-H
 samples!*
