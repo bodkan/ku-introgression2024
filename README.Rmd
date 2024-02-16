@@ -1,6 +1,7 @@
 ---
-params:
-    eval: FALSE
+output: 
+  github_document:
+    html_preview: false
 ---
     
 # Archaic introgression lecture exercises (February 2024)
