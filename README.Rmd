@@ -194,7 +194,7 @@ nrow(gt)
 
 From the lecture you know that we can get an estimate for the proportion of Neanderthal ancestry in a sample $X$ by dividing the rate of allele sharing between $X$ and a Neanderthal genome (one $f_4$ statistic) by the rate of allele sharing expected between two Neanderthals (another $f_4$ statistic).
 
-**Take the $f_4$ values you computed in Exercise 1 for all samples A-H, and estimate the proportion of Neanderthal ancestry in these samples by dividing those values by newly computed $f_4(\textrm(African, another Neanderthal; Neanderthal, Chimp))$.**
+**Take the $f_4$ values you computed in Exercise 1 for all samples A-H, and estimate the proportion of Neanderthal ancestry in these samples by dividing those values by newly computed $f_4(\textrm{African, another Neanderthal; Neanderthal, Chimp})$.**
 
 ```{r}
 # we can compute the f4 values for everyone (A-H samples as well as
