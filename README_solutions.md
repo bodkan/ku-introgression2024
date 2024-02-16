@@ -465,9 +465,9 @@ $$
 $$
 
 **But because we know $L$ (average tract length as you just computed)
-and $r$ (recombination rate of 10^{-8}), this means we can estimate the
-time since the admixture by a simple rearrangement of the above equation
-to separate the time of introgression $t$:**
+and $r$ (recombination rate of $10^{-8}$), this means we can estimate
+the time since the admixture by a simple rearrangement of the above
+equation to separate the time of introgression $t$:**
 
 $$
 t = \frac{1}{rL}
