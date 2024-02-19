@@ -406,10 +406,10 @@ computed](https://en.wikipedia.org/wiki/Exponential_distribution#Mean,_variance,
 simply as $1 / \lambda = 1 / rt$) gives us the theoretical expression
 for the expected tract length after time $t$.
 
-Of course, you can also compute this expectation from the data – **get
-an estimate of the expected length of an introgressed fragment after
-(unknown) time $t$ by computing the average introgressed tract length
-observed in data:**
+Of course, you can also compute this expectation from the data, **so do
+this now: get an estimate of the expected length of an introgressed
+fragment after (unknown) time $t$ by computing the average introgressed
+tract length observed in data:**
 
 ``` r
 L <- mean(tracts$length)
