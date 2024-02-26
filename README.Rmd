@@ -2,7 +2,7 @@
 title: Archaic introgression lecture exercises (February 2024)
 output:
   github_document:
-#    html_preview: false
+   html_preview: false
 params:
   eval: true
 ---
