@@ -196,11 +196,11 @@ We can see that the samples A-D are consistent with an $f_4$ statistic
 the same”. This is what we would expect for African samples who are not
 expected to be closer to a Neanderthal genome than another African.
 
-On the other hand, samples E-H show a much “more negative value of the D
-statistic”“, which is consistent with an access of ABBA sites compared
-to BABA sites – which arise with an increased sharing of derived alleles
-between the sample X and a Neanderthal genome, just as we would expect
-when X is of Eurasian ancestry.
+On the other hand, samples E-H show a much “more negative value of the
+$f_4$ statistic”“, which is consistent with an excess of ABBA sites
+compared to BABA sites – which arise with an increased sharing of
+derived alleles between the sample X and a Neanderthal genome, just as
+we would expect when X is of Eurasian ancestry.
 
 **Important:** In this simple example we’re missing confidence intervals
 – those would allow us to do a proper statistical test to determine for

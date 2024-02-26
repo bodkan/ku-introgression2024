@@ -36,28 +36,42 @@ Neanderthal ancestry but Africans don’t.*
 
 ### Moving over to R
 
+#### Task: Load and inspect the genotypes
+
 First **load the genotype table into R**:
 
 ``` r
 gt <- readRDS(url("https://github.com/bodkan/ku-introgression2024/raw/main/genotypes_ex1.rds"))
 ```
 
-The `gt` data set is a plain R data frame where each column contains the
-genotype of that individual (`0` - ancestral allele, `1` - derived
-allele).
-
 **Familiarize yourself with the data** by running this R command which
 shows information from only the first few genotypes:
 
 ``` r
 head(gt)
+#>   pos African Neanderthal Chimp A B C D E F G H
+#> 1  61       1           1     0 1 1 1 1 1 1 1 1
+#> 2 215       0           1     0 0 0 0 0 0 0 0 0
+#> 3 387       0           0     1 0 0 0 0 0 0 0 0
+#> 4 677       0           0     1 0 0 0 0 0 0 0 0
+#> 5 762       0           0     1 0 0 0 0 0 0 0 0
+#> 6 798       0           0     0 0 0 1 0 0 0 0 0
 ```
+
+The `gt` data set is a plain R data frame where each column contains the
+genotype of that individual (`0` - ancestral allele, `1` - derived
+allele).
+
+#### Task: Count SNPs
 
 **How many positions of the genome do we have genotyped?**
 
 ``` r
 nrow(gt)
+#> [1] 1118061
 ```
+
+#### Task: Count AFR-Chimp, NEA-Chimp, AFR-NEA shared alleles
 
 You can extract *all the genotypes* of a given individual by using the
 `$` or `[[` subsetting operators of R data frames like this:
@@ -79,23 +93,47 @@ gt[["African"]]
 gt[["Neanderthal"]]
 ```
 
-then we can sum up positions at which those two samples carry the same
-allele:
+then we can find positions at which those two samples carry the same
+allele like this:
 
 ``` r
 gt[["African"]] == gt[["Neanderthal"]] # this gives us TRUE/FALSE values 
+```
 
+Counting those positions can be done using the `sum()` function like
+this:
+
+``` r
 # sum() treats TRUE as 1 and FALSE as 0, so we can sum everything up!
 # -- this gives us the number of positions at which an African carries the same
 #    allele as the Neanderthal
 sum(gt[["African"]] == gt[["Neanderthal"]])
+#> [1] 991996
 ```
 
+So the answer to this task’s question can be computed as:
+
+``` r
+sum(gt[["African"]] == gt[["Chimp"]])
+#> [1] 284102
+sum(gt[["Neanderthal"]] == gt[["Chimp"]])
+#> [1] 283971
+sum(gt[["African"]] == gt[["Neanderthal"]])
+#> [1] 991996
+```
+
+**Does this make sense from a phylogenetic point of view?**
+
+#### Task: Compute $f_4(\textrm{AFR, X; NEA, Chimp})$ for all unknown samples as X
+
+Above we computed alleles which *agree* between two samples.
+
 On the other hand, this would count how many alleles are *different*
-between our African and chimpanzee chromosome:
+between a African and chimpanzee chromosome:
 
 ``` r
 sum(gt[["African"]] != gt[["Chimp"]]) # note the != instead of ==
+#> [1] 833959
 ```
 
 Inside the `sum()` function we can compose multiple logical conditions
@@ -106,7 +144,7 @@ Armed with this knowledge, we can compute the BABA and ABBA counts using
 this bit of R code:
 
 ``` r
-X = "A"  # or "B", or "C", ..., or "H"
+X = "A"  # and switch for "B", or "C", ..., or "H"
 
 abba <- sum(
   (gt[["African"]] == gt[["Chimp"]]) &         # filters for A**A sites
@@ -126,6 +164,7 @@ more frequently appearing in the data:
 
 ``` r
 baba - abba
+#> [1] 18
 ```
 
 Finally, we can compute an $f_4$ statistic like this, which simply
@@ -133,8 +172,13 @@ normalizes the raw difference between BABA and ABBA counts by how many
 SNPs we have in our data set:
 
 ``` r
-(baba - abba) / nrow(gt)
+f4_value <- (baba - abba) / nrow(gt)
+
+f4_value
+#> [1] 1.60993e-05
 ```
+
+#### Task (full solution under the line below):
 
 **You know that if `X` is a African, you expect to see roughly the same
 count of `BABA` and `ABBA` site patterns, so the difference should “be
@@ -143,8 +187,10 @@ of your mixed up samples A, B, C, …, H and note down the values you got
 for each – which samples are most likely African and which ones are
 Eurasian?**
 
-**\[If you are more familiar with R, compute the counts automatically in
-a loop of some kind and make a figure.\]**
+\[If you are more familiar with R, compute the counts automatically in a
+loop of some kind and make a figure.\]
+
+#### Task:
 
 **What does it mean for this test statistic to “be about zero”? What are
 we missing to truly use this as a statistical significance test?**
@@ -178,16 +224,18 @@ abline(h = 0, lty = 2, col = "red")
 axis(side = 1, at = seq_along(X), labels = X)
 ```
 
+![](figures/f4-1.png)<!-- -->
+
 We can see that the samples A-D are consistent with an $f_4$ statistic
 “value of about 0”“, meaning that the BABA and ABBA counts were”about
 the same”. This is what we would expect for African samples who are not
 expected to be closer to a Neanderthal genome than another African.
 
-On the other hand, samples E-H show a much “more negative value of the D
-statistic”“, which is consistent with an access of ABBA sites compared
-to BABA sites – which arise with an increased sharing of derived alleles
-between the sample X and a Neanderthal genome, just as we would expect
-when X is of Eurasian ancestry.
+On the other hand, samples E-H show a much “more negative value of the
+$f_4$ statistic”“, which is consistent with an excess of ABBA sites
+compared to BABA sites – which arise with an increased sharing of
+derived alleles between the sample X and a Neanderthal genome, just as
+we would expect when X is of Eurasian ancestry.
 
 **Important:** In this simple example we’re missing confidence intervals
 – those would allow us to do a proper statistical test to determine for
@@ -232,6 +280,8 @@ samples!*
 
 ### Moving over to R
 
+#### Task: Load and inspect the genotypes
+
 **You will be using the same genotype table as in the previous exercise,
 with one additional column called `another_Neanderthal`. You can load it
 again like this:**
@@ -245,9 +295,19 @@ what you expect:**
 
 ``` r
 head(gt)
+#>   pos African Neanderthal Chimp A B C D E F G H another_Neanderthal
+#> 1  61       1           1     0 1 1 1 1 1 1 1 1                   1
+#> 2 215       0           1     0 0 0 0 0 0 0 0 0                   1
+#> 3 387       0           0     1 0 0 0 0 0 0 0 0                   0
+#> 4 677       0           0     1 0 0 0 0 0 0 0 0                   0
+#> 5 762       0           0     1 0 0 0 0 0 0 0 0                   0
+#> 6 798       0           0     0 0 0 1 0 0 0 0 0                   0
 
 nrow(gt)
+#> [1] 1118061
 ```
+
+#### Task: Estimate Neanderthal ancestry *proportion* in samples A-H
 
 From the lecture you know that we can get an estimate for the proportion
 of Neanderthal ancestry in a sample $X$ by dividing the rate of allele
@@ -255,10 +315,10 @@ sharing between $X$ and a Neanderthal genome (one $f_4$ statistic) by
 the rate of allele sharing expected between two Neanderthals (another
 $f_4$ statistic).
 
-**Take the $f_4$ values you computed in Exercise 1 for all samples A-H,
-and estimate the proportion of Neanderthal ancestry in these samples by
-dividing those values by newly computed
-$f_4(\textrm{African, another Neanderthal; Neanderthal, Chimp})$.**
+To do this, we can take the $f_4$ values you computed in Exercise 1 for
+all samples A-H, and divide those values by
+$f_4(\textrm{African, another Neanderthal; Neanderthal, Chimp})$ (which
+we can do with the new set of genotypes `gt`):\*\*
 
 ``` r
 # we can compute the f4 values for everyone (A-H samples as well as
@@ -288,7 +348,18 @@ f4_values <- sapply(X, function(x) {
 proportions <- f4_values / f4_values["another_Neanderthal"]
 
 proportions
+#>                   A                   B                   C                   D 
+#>       -0.0003277912        0.0009651631        0.0002003169       -0.0011290587 
+#>                   E                   F                   G                   H 
+#>        0.0311037459        0.0335986014        0.0341813414        0.0338899714 
+#> another_Neanderthal 
+#>        1.0000000000
 ```
+
+#### Task: Plot the estimated proportions of Neanderthal ancestry
+
+**How much Neanderthal ancestry did you estimate in Africans vs
+Eurasians? Do those numbers fit what you’ve learned from the lecture?**
 
 To make the results clearer to see, let’s visualize them:
 
@@ -300,8 +371,9 @@ plot(proportions[-length(proportions)] * 100,
 abline(h = 3, lty = 2, col = "red")
 ```
 
-**How much Neanderthal ancestry did you estimate in Africans vs
-Eurasians? Do those numbers fit what you’ve learned from the lecture?**
+![](figures/f4ratio-1.png)<!-- -->
+
+#### Task:
 
 **Why did we not plot the proportion of Neanderthal ancestry in the very
 last item of the `proportions` variable? What does that last element of
@@ -333,6 +405,8 @@ population to estimate the time of Neanderthal introgression!*
 
 ### Moving over to R
 
+#### Task: Load and inspect the tracts data
+
 **First load the table with coordinates of all Neanderthal tracts** into
 R:
 
@@ -340,15 +414,18 @@ R:
 tracts <- readRDS(url("https://github.com/bodkan/ku-introgression2024/raw/main/tracts.rds"))
 ```
 
-The `gt` data set is a plain R data frame where each individual’s column
-contains the genotype of that individual’s chromosome (`0` - ancestral
-allele, `1` - derived allele).
-
 **Familiarize yourself with the data** by running this R command which
 shows information from only the first few genotypes:
 
 ``` r
 head(tracts)
+#>   individual     left    right length bin
+#> 1      EUR_1  2784832  2951855 167023  22
+#> 2      EUR_1  3168537  3231239  62702   8
+#> 3      EUR_1  3337799  3437224  99425  13
+#> 4      EUR_1  5612849  5648887  36038   5
+#> 5      EUR_1 11648276 11667319  19043   3
+#> 6      EUR_1 12485443 12493640   8197   2
 ```
 
 **For how many individuals do we have information about Neanderthal DNA
@@ -356,15 +433,18 @@ tracts that they carry?**
 
 ``` r
 length(unique(tracts$individual))
+#> [1] 100
 ```
 
+#### Task: plot the distribution of tract lengths across bins
+
 It looks like the inference software (or a helpful bioinformatician)
-binned each tract according to its length. **What does the distribution
-of Neanderthal tract lengths looks like in your data?** Knowing that
-recombination has acted on the introgressed Neanderthal DNA over time,
-each generation, suggests that the distribution should look exponential
-– do you see this in the data? To answer this, plot the proportion of
-tracts in each bin.
+binned each tract according to its length (see the column `bin`). **What
+does the distribution of Neanderthal tract lengths looks like in your
+data?** Knowing that recombination has acted on the introgressed
+Neanderthal DNA over time, each generation, suggests that the
+distribution should look exponential – do you see this in the data? To
+answer this, plot the proportion of tracts in each bin.
 
 ``` r
 # get the bin numbers
@@ -377,9 +457,13 @@ props <- counts / sum(counts)
 plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion of tracts")
 ```
 
-The distribution does, indeed, look quite exponential. **Let’s try to
-use this to date Neanderthal introgression using the information encoded
-in the distribution of tract lengths!**
+![](figures/tract_bins-1.png)<!-- -->
+
+The distribution does, indeed, look quite exponential. **Next we will
+try to use this to date Neanderthal introgression using the information
+encoded in the distribution of tract lengths!**
+
+#### Dating the introgression event – a bit of theory first
 
 As we know, over time since admixture, recombination breaks up longer
 haplotypes into shorter ones, regularly almost like a clock. And it
@@ -401,26 +485,32 @@ $$
 $$
 
 **The $t$ in this equation latter is our unknown we’re trying to compute
-in this exercise.**
+in this exercise!** So we know which equation we can use to extimate the
+admixture time.
 
 It also turns out that the expected value of this exponential
-distribution (which [can be
+distribution plotted above (which [can be
 computed](https://en.wikipedia.org/wiki/Exponential_distribution#Mean,_variance,_moments,_and_median)
 simply as $1 / \lambda = 1 / rt$) gives us the theoretical expression
 for the expected tract length after time $t$.
 
+#### Task: Compute the average length of an introgressed tract
+
 Of course, you can also compute this expectation from the data, **so do
 this now: get an estimate of the expected length of an introgressed
 fragment after (unknown) time $t$ by computing the average introgressed
-tract length observed in data:**
+tract length observed in data.** What is the average length of a
+Neanderthal DNA segment in the data? (Remember that at the moment of
+introgression, *entire Neanderthal chromosomes* were segregating in
+modern humans!)
 
 ``` r
 L <- mean(tracts$length)
 L # length in units of base pairs
+#> [1] 53227.53
 ```
 
-**What did you compute as the average length of a chunk of a Neanderthal
-DNA in a Eurasian genome?**
+#### Task: date the introgression event – in practice
 
 Taking the simple math above together and doing a little algebra, we can
 express the average expected length of an introgressed fragment after
@@ -430,21 +520,25 @@ $$
 \textrm{average tract length}~L = \frac{1}{\lambda} = \frac{1}{rt}
 $$
 
-**But because we know $L$ (average tract length as you just computed)
-and $r$ (recombination rate of $1 \times 10^{-8}$), this means we can
-estimate the time since the admixture by a simple rearrangement of the
-above equation to separate the time of introgression $t$:**
+**Because we know $L$ as computed just above (average tract length as
+you just computed) and $r$ (recombination rate of $1 \times 10^{-8}$),
+this means we can estimate the time since the admixture by a simple
+rearrangement of the above equation to separate the time of
+introgression $t$:**
 
 $$
-t = \frac{1}{rL}
+t = \frac{1}{rL},
 $$
+
+where `r` is the recombination rate and `L` is the average length of an
+introgressed Neanderthal tract (as you just computed it).
 
 Note that this time estimate will be in units of generations, so we’ll
 have to multiply this quantity by the generation time (roughly 30 years
 for humans) to get time in years before the present.
 
-**Use this simple equation to compute the estimate of the admixture
-time:**
+**Use this simple equation $\frac{1}{rL}$ to compute the estimate of the
+admixture time:**
 
 ``` r
 r <- 1e-8 # crossovers per bp per generation
@@ -452,10 +546,12 @@ L <- mean(tracts$length) # average tract length after time t
 
 t <- 1 / (r * L)
 t
+#> [1] 1878.727
 
 # convert the time of introgression to years before present assuming
 # generation time of 30 years
 t * 30
+#> [1] 56361.81
 ```
 
 You should get a value will be quite close to ~55 thousand years ago, an
@@ -464,7 +560,7 @@ Neanderthals and anatomically modern humans interbred!
 
 ------------------------------------------------------------------------
 
-**Bonus:**
+## Bonus content
 
 As a last sanity check, if we use this time to compute the rate of
 exponential decay $\lambda$, we should get a nice fit of the theoretical
@@ -474,6 +570,8 @@ each bin. As a reminder, this is the decay:
 ``` r
 plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion of tracts")
 ```
+
+![](figures/tract_bins2-1.png)<!-- -->
 
 Let’s try if we can plot the theoretical exponential decay from the
 estimated time of admixture.
@@ -496,6 +594,7 @@ average_bins <- aggregate(length ~ bin, data = tracts, FUN = mean)
 bin_step <- mean(diff(average_bins$length))
 
 bin_step
+#> [1] 10587.8
 ```
 
 With this, we can overlay the theoretical exponential decay expectation
@@ -514,6 +613,8 @@ lambda <- r * bin_step * t
 y <- dexp(bins, rate = lambda)
 lines(bins, y, col = "red", lty = 2)
 ```
+
+![](figures/tract_fit-1.png)<!-- -->
 
 ------------------------------------------------------------------------
 
