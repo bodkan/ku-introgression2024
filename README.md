@@ -6,6 +6,9 @@ Archaic introgression lecture exercises (February 2024)
 If you want to see this document with all the results (numbers and
 plots) included, click [here](README_solutions.md).
 
+You can find the slides from the lecture
+[here](https://github.com/bodkan/ku-introgression2024/blob/main/2024-02-28%20lecture.pdf).
+
 ### Introduction
 
 *You sequenced the genomes of four Africans and four Eurasians and got
