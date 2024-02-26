@@ -49,13 +49,6 @@ shows information from only the first few genotypes:
 
 ``` r
 head(gt)
-#>   pos African Neanderthal Chimp A B C D E F G H
-#> 1  61       1           1     0 1 1 1 1 1 1 1 1
-#> 2 215       0           1     0 0 0 0 0 0 0 0 0
-#> 3 387       0           0     1 0 0 0 0 0 0 0 0
-#> 4 677       0           0     1 0 0 0 0 0 0 0 0
-#> 5 762       0           0     1 0 0 0 0 0 0 0 0
-#> 6 798       0           0     0 0 0 1 0 0 0 0 0
 ```
 
 The `gt` data set is a plain R data frame where each column contains the
@@ -68,7 +61,6 @@ allele).
 
 ``` r
 nrow(gt)
-#> [1] 1118061
 ```
 
 #### Task: Count AFR-Chimp, NEA-Chimp, AFR-NEA shared alleles
@@ -108,18 +100,14 @@ this:
 # -- this gives us the number of positions at which an African carries the same
 #    allele as the Neanderthal
 sum(gt[["African"]] == gt[["Neanderthal"]])
-#> [1] 991996
 ```
 
 So the answer to this task’s question can be computed as:
 
 ``` r
 sum(gt[["African"]] == gt[["Chimp"]])
-#> [1] 284102
 sum(gt[["Neanderthal"]] == gt[["Chimp"]])
-#> [1] 283971
 sum(gt[["African"]] == gt[["Neanderthal"]])
-#> [1] 991996
 ```
 
 **Does this make sense from a phylogenetic point of view?**
@@ -133,7 +121,6 @@ between a African and chimpanzee chromosome:
 
 ``` r
 sum(gt[["African"]] != gt[["Chimp"]]) # note the != instead of ==
-#> [1] 833959
 ```
 
 Inside the `sum()` function we can compose multiple logical conditions
@@ -164,7 +151,6 @@ more frequently appearing in the data:
 
 ``` r
 baba - abba
-#> [1] 18
 ```
 
 Finally, we can compute an $f_4$ statistic like this, which simply
@@ -175,7 +161,6 @@ SNPs we have in our data set:
 f4_value <- (baba - abba) / nrow(gt)
 
 f4_value
-#> [1] 1.60993e-05
 ```
 
 #### Task (full solution under the line below):
@@ -223,8 +208,6 @@ plot(f4_values, xaxt = "n", xlab = "test sample", ylab = "f4(African, X; Neander
 abline(h = 0, lty = 2, col = "red")
 axis(side = 1, at = seq_along(X), labels = X)
 ```
-
-![](figures/f4-1.png)<!-- -->
 
 We can see that the samples A-D are consistent with an $f_4$ statistic
 “value of about 0”“, meaning that the BABA and ABBA counts were”about
@@ -295,16 +278,8 @@ what you expect:**
 
 ``` r
 head(gt)
-#>   pos African Neanderthal Chimp A B C D E F G H another_Neanderthal
-#> 1  61       1           1     0 1 1 1 1 1 1 1 1                   1
-#> 2 215       0           1     0 0 0 0 0 0 0 0 0                   1
-#> 3 387       0           0     1 0 0 0 0 0 0 0 0                   0
-#> 4 677       0           0     1 0 0 0 0 0 0 0 0                   0
-#> 5 762       0           0     1 0 0 0 0 0 0 0 0                   0
-#> 6 798       0           0     0 0 0 1 0 0 0 0 0                   0
 
 nrow(gt)
-#> [1] 1118061
 ```
 
 #### Task: Estimate Neanderthal ancestry *proportion* in samples A-H
@@ -348,12 +323,6 @@ f4_values <- sapply(X, function(x) {
 proportions <- f4_values / f4_values["another_Neanderthal"]
 
 proportions
-#>                   A                   B                   C                   D 
-#>       -0.0003277912        0.0009651631        0.0002003169       -0.0011290587 
-#>                   E                   F                   G                   H 
-#>        0.0311037459        0.0335986014        0.0341813414        0.0338899714 
-#> another_Neanderthal 
-#>        1.0000000000
 ```
 
 #### Task: Plot the estimated proportions of Neanderthal ancestry
@@ -370,8 +339,6 @@ plot(proportions[-length(proportions)] * 100,
 
 abline(h = 3, lty = 2, col = "red")
 ```
-
-![](figures/f4ratio-1.png)<!-- -->
 
 #### Task:
 
@@ -419,13 +386,6 @@ shows information from only the first few genotypes:
 
 ``` r
 head(tracts)
-#>   individual     left    right length bin
-#> 1      EUR_1  2784832  2951855 167023  22
-#> 2      EUR_1  3168537  3231239  62702   8
-#> 3      EUR_1  3337799  3437224  99425  13
-#> 4      EUR_1  5612849  5648887  36038   5
-#> 5      EUR_1 11648276 11667319  19043   3
-#> 6      EUR_1 12485443 12493640   8197   2
 ```
 
 **For how many individuals do we have information about Neanderthal DNA
@@ -433,7 +393,6 @@ tracts that they carry?**
 
 ``` r
 length(unique(tracts$individual))
-#> [1] 100
 ```
 
 #### Task: plot the distribution of tract lengths across bins
@@ -456,8 +415,6 @@ props <- counts / sum(counts)
 
 plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion of tracts")
 ```
-
-![](figures/tract_bins-1.png)<!-- -->
 
 The distribution does, indeed, look quite exponential. **Next we will
 try to use this to date Neanderthal introgression using the information
@@ -507,7 +464,6 @@ modern humans!)
 ``` r
 L <- mean(tracts$length)
 L # length in units of base pairs
-#> [1] 53227.53
 ```
 
 #### Task: date the introgression event – in practice
@@ -546,12 +502,10 @@ L <- mean(tracts$length) # average tract length after time t
 
 t <- 1 / (r * L)
 t
-#> [1] 1878.727
 
 # convert the time of introgression to years before present assuming
 # generation time of 30 years
 t * 30
-#> [1] 56361.81
 ```
 
 You should get a value will be quite close to ~55 thousand years ago, an
@@ -570,8 +524,6 @@ each bin. As a reminder, this is the decay:
 ``` r
 plot(bins, props, xlab = "Neanderthal tract length bin", ylab = "proportion of tracts")
 ```
-
-![](figures/tract_bins2-1.png)<!-- -->
 
 Let’s try if we can plot the theoretical exponential decay from the
 estimated time of admixture.
@@ -594,7 +546,6 @@ average_bins <- aggregate(length ~ bin, data = tracts, FUN = mean)
 bin_step <- mean(diff(average_bins$length))
 
 bin_step
-#> [1] 10587.8
 ```
 
 With this, we can overlay the theoretical exponential decay expectation
@@ -613,8 +564,6 @@ lambda <- r * bin_step * t
 y <- dexp(bins, rate = lambda)
 lines(bins, y, col = "red", lty = 2)
 ```
-
-![](figures/tract_fit-1.png)<!-- -->
 
 ------------------------------------------------------------------------
 
