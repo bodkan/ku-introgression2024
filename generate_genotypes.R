@@ -47,7 +47,7 @@ gt <- dplyr::rename(
 
 # genotypes without "another_Neanderthal"
 saveRDS(gt[, -ncol(gt)], "genotypes_ex1.rds")
-write.table(gt[, -ncol(gt)], file = gzfile("genotypes_ex1.tsv.gz"),
+write.table(gt[, -ncol(gt)], file = "genotypes_ex1.tsv",
             sep = "\t", row.names = FALSE, col.names = TRUE)
 
 # genotypes with "another_Neanderthal"
