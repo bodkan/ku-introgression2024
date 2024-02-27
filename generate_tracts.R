@@ -30,4 +30,5 @@ tracts <- ts_tracts(ts, census = 55000, quiet = TRUE) %>%
 n <- 50
 tracts$bin <- cut(tracts$length, breaks = n, labels = FALSE)
 
-saveRDS(tracts, "tracts.rds")
+write.table(tracts, file = "tracts.tsv",
+            sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
