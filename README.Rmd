@@ -43,7 +43,7 @@ $$
 First **load the genotype table into R**:
 
 ```{r}
-gt <- readRDS(url("https://github.com/bodkan/ku-introgression2024/raw/main/genotypes_ex1.rds"))
+df <- read.table("https://github.com/bodkan/ku-introgression2024/raw/main/genotypes_ex1.tsv", sep = "\t", header = TRUE)
 ```
 
 **Familiarize yourself with the data** by running this R command which shows information from only the first few genotypes:

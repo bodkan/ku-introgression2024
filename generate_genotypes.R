@@ -46,11 +46,11 @@ gt <- dplyr::rename(
 ) %>% dplyr::select(pos, African, Neanderthal, Chimp, dplyr::everything())
 
 # genotypes without "another_Neanderthal"
-saveRDS(gt[, -ncol(gt)], "genotypes_ex1.rds")
+# saveRDS(gt[, -ncol(gt)], "genotypes_ex1.rds") # doesn't load in the ancient KU R
 write.table(gt[, -ncol(gt)], file = "genotypes_ex1.tsv",
-            sep = "\t", row.names = FALSE, col.names = TRUE)
+            sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
 
 # genotypes with "another_Neanderthal"
-saveRDS(gt, "genotypes_ex2.rds")
-write.table(gt, file = gzfile("genotypes_ex2.tsv.gz"),
-            sep = "\t", row.names = FALSE, col.names = TRUE)
+# saveRDS(gt, "genotypes_ex2.rds") # doesn't load in the ancient KU R
+write.table(gt, file = "genotypes_ex2.tsv.gz",
+            sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
