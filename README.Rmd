@@ -164,7 +164,7 @@ f4_value
 
 If you're not comfortable with R, feel free to run this in full and answer the questions based on the results you get:
 
-```{r f4}
+```{r}
 X <- c("A", "B", "C", "D", "E", "F", "G", "H")
 
 f4_values <- sapply(X, function(x) {
@@ -183,6 +183,10 @@ f4_values <- sapply(X, function(x) {
   (baba - abba) / nrow(gt)
 })
 
+data.frame(f4_values) # to print values in a neater table
+```
+
+```{r f4}
 plot(f4_values, xaxt = "n", xlab = "test sample", ylab = "f4(African, X; Neanderthal, Chimp)")
 abline(h = 0, lty = 2, col = "red")
 axis(side = 1, at = seq_along(X), labels = X)
@@ -262,7 +266,7 @@ f4_values <- sapply(X, function(x) {
 # samples A-H by f4 value comparing the two Neanderthals
 proportions <- f4_values / f4_values["another_Neanderthal"]
 
-proportions
+data.frame(proportions) # to print values in a neater table
 ```
 
 #### Task: Plot the estimated proportions of Neanderthal ancestry

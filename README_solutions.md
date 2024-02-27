@@ -219,6 +219,19 @@ f4_values <- sapply(X, function(x) {
   (baba - abba) / nrow(gt)
 })
 
+data.frame(f4_values) # to print values in a neater table
+#>       f4_values
+#> A -9.385525e-05
+#> B -9.474911e-05
+#> C  1.251403e-05
+#> D -1.993307e-04
+#> E -1.592858e-03
+#> F -1.480231e-03
+#> G -1.268387e-03
+#> H -1.452522e-03
+```
+
+``` r
 plot(f4_values, xaxt = "n", xlab = "test sample", ylab = "f4(African, X; Neanderthal, Chimp)")
 abline(h = 0, lty = 2, col = "red")
 axis(side = 1, at = seq_along(X), labels = X)
@@ -347,13 +360,17 @@ f4_values <- sapply(X, function(x) {
 # samples A-H by f4 value comparing the two Neanderthals
 proportions <- f4_values / f4_values["another_Neanderthal"]
 
-proportions
-#>                   A                   B                   C                   D 
-#>        0.0019108280        0.0019290264       -0.0002547771        0.0040582348 
-#>                   E                   F                   G                   H 
-#>        0.0324294813        0.0301364877        0.0258234759        0.0295723385 
-#> another_Neanderthal 
-#>        1.0000000000
+data.frame(proportions) # to print values in a neater table
+#>                       proportions
+#> A                    0.0019108280
+#> B                    0.0019290264
+#> C                   -0.0002547771
+#> D                    0.0040582348
+#> E                    0.0324294813
+#> F                    0.0301364877
+#> G                    0.0258234759
+#> H                    0.0295723385
+#> another_Neanderthal  1.0000000000
 ```
 
 #### Task: Plot the estimated proportions of Neanderthal ancestry
