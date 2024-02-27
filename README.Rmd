@@ -106,7 +106,7 @@ sum(gt[["African"]] == gt[["Neanderthal"]])
 **Does this make sense from a phylogenetic point of view?**
 
 
-#### Task: Compute $f_4(\textrm{AFR, X; NEA, Chimp})$ for all unknown samples as X
+#### Task: Compute $f_4(\textrm{AFR, X; NEA, Chimp})$ for one of the unknown samples A-H
 
 Above we computed alleles which *agree* between two samples.
 
@@ -121,7 +121,7 @@ Inside the `sum()` function we can compose multiple logical conditions to create
 Armed with this knowledge, we can compute the BABA and ABBA counts using this bit of R code:
 
 ```{r}
-X = "A"  # and switch for "B", or "C", ..., or "H"
+X <- "A"
 
 abba <- sum(
   (gt[["African"]] == gt[["Chimp"]]) &         # filters for A**A sites
