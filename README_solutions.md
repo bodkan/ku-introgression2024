@@ -331,7 +331,7 @@ $f_4$ statistic).
 To do this, we can take the $f_4$ values you computed in Exercise 1 for
 all samples A-H, and divide those values by
 $f_4(\textrm{African, another Neanderthal; Neanderthal, Chimp})$ (which
-we can do with the new set of genotypes `gt`):\*\*
+we can do with the new set of genotypes `gt`):
 
 ``` r
 # we can compute the f4 values for everyone (A-H samples as well as
