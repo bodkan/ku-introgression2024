@@ -52,5 +52,5 @@ write.table(gt[, -ncol(gt)], file = "genotypes_ex1.tsv",
 
 # genotypes with "another_Neanderthal"
 # saveRDS(gt, "genotypes_ex2.rds") # doesn't load in the ancient KU R
-write.table(gt, file = "genotypes_ex2.tsv.gz",
+write.table(gt, file = "genotypes_ex2.tsv",
             sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
