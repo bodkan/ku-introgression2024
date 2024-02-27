@@ -428,7 +428,7 @@ population to estimate the time of Neanderthal introgression!*
 R:
 
 ``` r
-tracts <- readRDS(url("https://github.com/bodkan/ku-introgression2024/raw/main/tracts.rds"))
+tracts <- read.table(url("https://github.com/bodkan/ku-introgression2024/raw/main/tracts.tsv"), sep = "\t", header = TRUE)
 ```
 
 **Familiarize yourself with the data** by running this R command which
@@ -437,12 +437,12 @@ shows information from only the first few genotypes:
 ``` r
 head(tracts)
 #>   individual     left    right length bin
-#> 1      EUR_1  2784832  2951855 167023  22
-#> 2      EUR_1  3168537  3231239  62702   8
-#> 3      EUR_1  3337799  3437224  99425  13
-#> 4      EUR_1  5612849  5648887  36038   5
-#> 5      EUR_1 11648276 11667319  19043   3
-#> 6      EUR_1 12485443 12493640   8197   2
+#> 1      EUR_1  6602745  6693324  90579  12
+#> 2      EUR_1 10306597 10347695  41098   6
+#> 3      EUR_1 10410256 10434431  24175   4
+#> 4      EUR_1 10926913 11122255 195342  25
+#> 5      EUR_1 11360944 11448832  87888  12
+#> 6      EUR_1 14799338 14799442    104   1
 ```
 
 **For how many individuals do we have information about Neanderthal DNA

@@ -382,7 +382,7 @@ population to estimate the time of Neanderthal introgression!*
 R:
 
 ``` r
-tracts <- readRDS(url("https://github.com/bodkan/ku-introgression2024/raw/main/tracts.rds"))
+tracts <- read.table(url("https://github.com/bodkan/ku-introgression2024/raw/main/tracts.tsv"), sep = "\t", header = TRUE)
 ```
 
 **Familiarize yourself with the data** by running this R command which

@@ -310,7 +310,7 @@ If you want to take a closer look at how the genotype data was prepared (it was 
 **First load the table with coordinates of all Neanderthal tracts** into R:
 
 ```{r}
-tracts <- readRDS(url("https://github.com/bodkan/ku-introgression2024/raw/main/tracts.rds"))
+tracts <- read.table(url("https://github.com/bodkan/ku-introgression2024/raw/main/tracts.tsv"), sep = "\t", header = TRUE)
 ```
 
 **Familiarize yourself with the data** by running this R command which shows information from only the first few genotypes:
