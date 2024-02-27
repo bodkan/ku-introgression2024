@@ -41,7 +41,7 @@ Neanderthal ancestry but Africans don’t.*
 First **load the genotype table into R**:
 
 ``` r
-gt <- readRDS(url("https://github.com/bodkan/ku-introgression2024/raw/main/genotypes_ex1.rds"))
+gt <- read.table(url("https://github.com/bodkan/ku-introgression2024/raw/main/genotypes_ex1.tsv"), sep = "\t", header = TRUE)
 ```
 
 **Familiarize yourself with the data** by running this R command which
@@ -49,13 +49,13 @@ shows information from only the first few genotypes:
 
 ``` r
 head(gt)
-#>   pos African Neanderthal Chimp A B C D E F G H
-#> 1  61       1           1     0 1 1 1 1 1 1 1 1
-#> 2 215       0           1     0 0 0 0 0 0 0 0 0
-#> 3 387       0           0     1 0 0 0 0 0 0 0 0
-#> 4 677       0           0     1 0 0 0 0 0 0 0 0
-#> 5 762       0           0     1 0 0 0 0 0 0 0 0
-#> 6 798       0           0     0 0 0 1 0 0 0 0 0
+#>    pos African Neanderthal Chimp A B C D E F G H
+#> 1  103       0           0     1 0 0 0 0 0 0 0 0
+#> 2  244       1           1     0 1 1 1 1 1 1 1 1
+#> 3  251       0           0     1 0 0 0 0 0 0 0 0
+#> 4 1121       0           0     1 0 0 0 0 0 0 0 0
+#> 5 1176       0           0     0 0 0 0 0 0 0 0 0
+#> 6 1348       1           1     0 1 1 1 1 1 1 1 1
 ```
 
 The `gt` data set is a plain R data frame where each column contains the
@@ -68,7 +68,7 @@ allele).
 
 ``` r
 nrow(gt)
-#> [1] 1118061
+#> [1] 1118744
 ```
 
 #### Task: Count AFR-Chimp, NEA-Chimp, AFR-NEA shared alleles
@@ -108,18 +108,18 @@ this:
 # -- this gives us the number of positions at which an African carries the same
 #    allele as the Neanderthal
 sum(gt[["African"]] == gt[["Neanderthal"]])
-#> [1] 991996
+#> [1] 992377
 ```
 
 So the answer to this task’s question can be computed as:
 
 ``` r
 sum(gt[["African"]] == gt[["Chimp"]])
-#> [1] 284102
+#> [1] 283017
 sum(gt[["Neanderthal"]] == gt[["Chimp"]])
-#> [1] 283971
+#> [1] 283210
 sum(gt[["African"]] == gt[["Neanderthal"]])
-#> [1] 991996
+#> [1] 992377
 ```
 
 **Does this make sense from a phylogenetic point of view?**
@@ -133,7 +133,7 @@ between a African and chimpanzee chromosome:
 
 ``` r
 sum(gt[["African"]] != gt[["Chimp"]]) # note the != instead of ==
-#> [1] 833959
+#> [1] 835727
 ```
 
 Inside the `sum()` function we can compose multiple logical conditions
@@ -164,7 +164,7 @@ more frequently appearing in the data:
 
 ``` r
 baba - abba
-#> [1] 18
+#> [1] -105
 ```
 
 Finally, we can compute an $f_4$ statistic like this, which simply
@@ -175,7 +175,7 @@ SNPs we have in our data set:
 f4_value <- (baba - abba) / nrow(gt)
 
 f4_value
-#> [1] 1.60993e-05
+#> [1] -9.385525e-05
 ```
 
 #### Task (full solution under the line below):
@@ -287,7 +287,7 @@ with one additional column called `another_Neanderthal`. You can load it
 again like this:**
 
 ``` r
-gt <- readRDS(url("https://github.com/bodkan/ku-introgression2024/raw/main/genotypes_ex2.rds"))
+gt <- read.table(url("https://github.com/bodkan/ku-introgression2024/raw/main/genotypes_ex2.tsv"), sep = "\t", header = TRUE)
 ```
 
 As always, **verify that the format of the data set you have matches
@@ -295,16 +295,16 @@ what you expect:**
 
 ``` r
 head(gt)
-#>   pos African Neanderthal Chimp A B C D E F G H another_Neanderthal
-#> 1  61       1           1     0 1 1 1 1 1 1 1 1                   1
-#> 2 215       0           1     0 0 0 0 0 0 0 0 0                   1
-#> 3 387       0           0     1 0 0 0 0 0 0 0 0                   0
-#> 4 677       0           0     1 0 0 0 0 0 0 0 0                   0
-#> 5 762       0           0     1 0 0 0 0 0 0 0 0                   0
-#> 6 798       0           0     0 0 0 1 0 0 0 0 0                   0
+#>    pos African Neanderthal Chimp A B C D E F G H another_Neanderthal
+#> 1  103       0           0     1 0 0 0 0 0 0 0 0                   0
+#> 2  244       1           1     0 1 1 1 1 1 1 1 1                   1
+#> 3  251       0           0     1 0 0 0 0 0 0 0 0                   0
+#> 4 1121       0           0     1 0 0 0 0 0 0 0 0                   0
+#> 5 1176       0           0     0 0 0 0 0 0 0 0 0                   1
+#> 6 1348       1           1     0 1 1 1 1 1 1 1 1                   1
 
 nrow(gt)
-#> [1] 1118061
+#> [1] 1118744
 ```
 
 #### Task: Estimate Neanderthal ancestry *proportion* in samples A-H
@@ -349,9 +349,9 @@ proportions <- f4_values / f4_values["another_Neanderthal"]
 
 proportions
 #>                   A                   B                   C                   D 
-#>       -0.0003277912        0.0009651631        0.0002003169       -0.0011290587 
+#>        0.0019108280        0.0019290264       -0.0002547771        0.0040582348 
 #>                   E                   F                   G                   H 
-#>        0.0311037459        0.0335986014        0.0341813414        0.0338899714 
+#>        0.0324294813        0.0301364877        0.0258234759        0.0295723385 
 #> another_Neanderthal 
 #>        1.0000000000
 ```

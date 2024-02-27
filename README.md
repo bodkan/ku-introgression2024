@@ -41,7 +41,7 @@ Neanderthal ancestry but Africans don’t.*
 First **load the genotype table into R**:
 
 ``` r
-gt <- read.table("https://github.com/bodkan/ku-introgression2024/raw/main/genotypes_ex1.tsv", sep = "\t", header = TRUE)
+gt <- read.table(url("https://github.com/bodkan/ku-introgression2024/raw/main/genotypes_ex1.tsv"), sep = "\t", header = TRUE)
 ```
 
 **Familiarize yourself with the data** by running this R command which
@@ -270,7 +270,7 @@ with one additional column called `another_Neanderthal`. You can load it
 again like this:**
 
 ``` r
-gt <- read.table("https://github.com/bodkan/ku-introgression2024/raw/main/genotypes_ex2.tsv", sep = "\t", header = TRUE)
+gt <- read.table(url("https://github.com/bodkan/ku-introgression2024/raw/main/genotypes_ex2.tsv"), sep = "\t", header = TRUE)
 ```
 
 As always, **verify that the format of the data set you have matches
