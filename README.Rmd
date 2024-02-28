@@ -168,7 +168,7 @@ aaab
 
 #### Task (full solution under the line below):
 
-**You know that if `X` is a African, you expect to see roughly the same count of `BABA` and `ABBA` site patterns, so the difference should "be about zero". Use the code above to compute the $f_4$ statistic for all of your mixed up samples A, B, C, ..., H and note down the values you got for each -- which samples are most likely African and which ones are Eurasian?**
+**You know that if `X` is a African, you expect to see roughly the same count of `BABA` and `ABBA` site patterns, so the difference should "be about zero". Use the code above to compute `baba`, `abba`, and `f4_value` to compute the $f_4$ statistic for all of your mixed up samples A, B, C, ..., H and note down the values you got for each -- which samples are most likely African and which ones are Eurasian?**
 
 [If you are more familiar with R, compute the counts automatically in a loop of some kind and make a figure.]
 
