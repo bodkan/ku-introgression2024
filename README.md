@@ -166,6 +166,20 @@ f4_value <- (baba - abba) / nrow(gt)
 f4_value
 ```
 
+#### Task: Are ABBA or BABA sites the only ones in our data? For instance, can you found if there are any AAAB sites and would those be useful for studying introgression?
+
+``` r
+X <- "A"
+
+aaab <- sum(
+  (gt[["African"]]     == gt[[X]]) &               # filters for AA** sites
+  (gt[[X]]             == gt[["Neanderthal"]]) &   # filters for *AA* sites
+  (gt[["Neanderthal"]] != gt[["Chimp"]])           # filters for **AB sites
+)
+
+aaab
+```
+
 #### Task (full solution under the line below):
 
 **You know that if `X` is a African, you expect to see roughly the same
