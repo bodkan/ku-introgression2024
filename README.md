@@ -36,6 +36,9 @@ Neanderthal ancestry but Africans don’t.*
 
 ### Moving over to R
 
+Type `R` in your terminal or (better) just use RStudio R console if you
+have it.
+
 #### Task: Load and inspect the genotypes
 
 First **load the genotype table into R**:
@@ -267,6 +270,9 @@ samples!*
 
 ### Moving over to R
 
+Type `R` in your terminal or (better) just use RStudio R console if you
+have it.
+
 #### Task: Load and inspect the genotypes
 
 **You will be using the same genotype table as in the previous exercise,
@@ -375,6 +381,9 @@ know the lengths of each of those tracts.*
 population to estimate the time of Neanderthal introgression!*
 
 ### Moving over to R
+
+Type `R` in your terminal or (better) just use RStudio R console if you
+have it.
 
 #### Task: Load and inspect the tracts data
 

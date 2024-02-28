@@ -38,6 +38,8 @@ $$
 
 ### Moving over to R
 
+Type `R` in your terminal or (better) just use RStudio R console if you have it.
+
 #### Task: Load and inspect the genotypes
 
 First **load the genotype table into R**:
@@ -217,6 +219,8 @@ If you want to take a closer look at how the genotype data was prepared (it was 
 
 ### Moving over to R
 
+Type `R` in your terminal or (better) just use RStudio R console if you have it.
+
 #### Task: Load and inspect the genotypes
 
 **You will be using the same genotype table as in the previous exercise, with one additional column called `another_Neanderthal`. You can load it again like this:**
@@ -304,6 +308,8 @@ If you want to take a closer look at how the genotype data was prepared (it was 
 *Use the distribution of the Neanderthal tract lengths in your population to estimate the time of Neanderthal introgression!*
 
 ### Moving over to R
+
+Type `R` in your terminal or (better) just use RStudio R console if you have it.
 
 #### Task: Load and inspect the tracts data
 
