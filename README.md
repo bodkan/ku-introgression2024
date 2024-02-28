@@ -166,7 +166,7 @@ f4_value <- (baba - abba) / nrow(gt)
 f4_value
 ```
 
-#### Task: Are ABBA or BABA sites the only ones in our data? For instance, can you found if there are any AAAB sites? Would those be useful for studying introgression?
+#### Task: Are ABBA or BABA sites the only ones in our data? For instance, can you find if there are any AAAB sites? Would those be useful for studying introgression?
 
 ``` r
 X <- "A"

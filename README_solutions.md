@@ -181,7 +181,7 @@ f4_value
 #> [1] -9.385525e-05
 ```
 
-#### Task: Are ABBA or BABA sites the only ones in our data? For instance, can you found if there are any AAAB sites? Would those be useful for studying introgression?
+#### Task: Are ABBA or BABA sites the only ones in our data? For instance, can you find if there are any AAAB sites? Would those be useful for studying introgression?
 
 ``` r
 X <- "A"
