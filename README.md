@@ -597,3 +597,13 @@ lines(bins, y, col = "red", lty = 2)
 If you want to take a closer look at how the tracts data was prepared
 (it was simulated!), you can see the complete code
 [here](generate_tracts.R).
+
+---
+
+This work is licensed under a
+[Creative Commons Attribution 4.0 International License][cc-by].
+
+[![CC BY 4.0][cc-by-image]][cc-by]
+
+[cc-by]: http://creativecommons.org/licenses/by/4.0/
+[cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
